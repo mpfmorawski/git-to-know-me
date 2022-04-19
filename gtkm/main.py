@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 
-from auth.service_auth import auth
-from stats.stats_aggregator import stats
-from stats.github_fetcher import github_fetcher
+from .auth.service_auth import auth
+from .stats.stats_aggregator import stats
+from .stats.github_fetcher import github_fetcher
 
 app = FastAPI()
 
