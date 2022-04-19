@@ -1,13 +1,13 @@
-from fastapi import FastAPI
+from fastapi import APIRouter
 
-app = FastAPI()
-
-
-@app.get("/auth/user/")
-def read_root():
-    return {"id": 111, "github": "zygfryd"}
+auth = APIRouter()
 
 
-@app.get("/api/auth/logout/")
-def read_root():
+@auth.get("/auth/user/")
+def get_user():
+    return {"id": 111, "github": "zygfryd", "gitlab": None}
+
+
+@auth.get("/api/auth/logout/")
+def logout():
     return 200
