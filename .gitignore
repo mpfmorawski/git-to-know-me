@@ -1,0 +1,6 @@
+# Language-related
+*.pyc
+__pycache__
+
+# Development
+.vscode
