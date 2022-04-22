@@ -1,14 +1,18 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Response
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import RedirectResponse, JSONResponse
 from sqlalchemy.orm import Session
 import requests
 import uuid
 
-import crud, model, schemas
-from database import engine, get_db
+from .database.database import Base, engine, get_db
+from .database.user_schema import User
+from .database.database_operations import get_user, get_user_by_github_login, create_user
+from .sessions.session import backend, cookie, verifier
+from .sessions.session_data import SessionData
 
-model.Base.metadata.create_all(bind=engine)
+
+Base.metadata.create_all(bind=engine)
 auth = APIRouter()
 
 root_url = "http://127.0.0.1:8000"
@@ -17,9 +21,10 @@ client_secret = "<CLIENT_SECRET>"
 current_user_id = None
 
 
+# Endpoint for obtaining user data based on the user ID
 @auth.get("/auth/user/")
-def get_user(id: str, db: Session = Depends(get_db)):
-    user = crud.get_user(db, id)
+async def get_user(id: str, db: Session = Depends(get_db)):
+    user = get_user(db, id)
     if user:
         user_json = jsonable_encoder(user)
         return JSONResponse(content=user_json)
@@ -27,41 +32,50 @@ def get_user(id: str, db: Session = Depends(get_db)):
         return "No user with id: " + id + " exists in the database."
 
 
+# Endpoint to end current user session
 @auth.get("/api/auth/logout/")
-def logout():
-    global current_user_id
-    current_user_id = None
+async def logout(response: Response, session_id: uuid.UUID = Depends(cookie)):
+    await backend.delete(session_id)
+    cookie.delete_from_response(response)
     return 200
 
 
+# Endpoint to redirect user after they clicked "Log in with GitHub"
 @auth.get("/auth/github/authorize")
-def authorize_github():
+async def authorize_github():
     response = RedirectResponse(url=f"http://github.com/login/oauth/authorize?client_id={client_id}")
     return response
 
 
-@auth.get("/auth/github/authorized", response_model=schemas.User)
-def github_authorized(code : str, db: Session = Depends(get_db)):
-    headers = {"Accept" : "application/vnd.github.v3+json"}
+# Endpoint that GitHub redirects the user to after successful authorization
+@auth.get("/auth/github/authorized", response_model=User)
+async def github_authorized(code : str, db: Session = Depends(get_db)):
+    # Request exchanging the temporary code for the access token
+    headers = {"Accept" : "application/json"}
     params = {"client_id": client_id, "client_secret": client_secret, "code": code}
     token_request = requests.post("http://github.com/login/oauth/access_token", params=params, headers=headers)
     token = token_request.json()["access_token"]
-
-    headers = {"Accept" : "application/vnd.github.v3+json", "Authorization" : "token " + token}
+    # Request to check the logged in user's username
+    headers = {"Accept" : "application/json", "Authorization" : "token " + token}
     login_request = requests.get("https://api.github.com/user?access_token=" + token, headers=headers)
     dict = login_request.json()
     login = dict["login"]
-
-    try:
-        user = crud.get_user(db, login)
-        if not user:
-            user_id = uuid.uuid4().hex
-            user = schemas.User(id=user_id, github_login=login, github_token=token, gitlab_login="", gitlab_token="")
-            crud.create_user(db=db, user=user)
-        global current_user_id
-        current_user_id = user.id
-    except Exception as e:
-        print(e)
-
+    # Get or create user in the DB
+    user = get_user_by_github_login(db, login)
+    if not user:
+        user_id = uuid.uuid4().hex
+        user = User(id=user_id, github_login=login, github_token=token, gitlab_login="", gitlab_token="")
+        create_user(db=db, user=user)
+    # Create user session and cookie
     response = RedirectResponse(url=root_url + "/index.html")
+    session = uuid.uuid4()
+    data = SessionData(id=user.id)
+    await backend.create(session, data)
+    cookie.attach_to_response(response, session)
     return response
+    
+
+# Returns user ID based on current session cookie
+@auth.get("/auth/user/id", dependencies=[Depends(cookie)])
+async def get_user_id(session_data: SessionData = Depends(verifier)):
+    return session_data

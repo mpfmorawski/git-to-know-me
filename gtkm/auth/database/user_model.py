@@ -1,7 +1,8 @@
 from sqlalchemy import Column, String
-from database import Base
+from .database import Base
 
-class User(Base):
+
+class UserModel(Base):
     __tablename__ = "users"
     id = Column(String, primary_key=True, index=True)
     github_login = Column(String, nullable=True)
