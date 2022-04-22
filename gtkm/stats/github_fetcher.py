@@ -36,6 +36,13 @@ async def get_basic_info(git_user: str):
     URL_basic_user_data = URL_BASE + "/users/{}".format(git_user)
     basic_user_data = await task(URL_basic_user_data)
 
+    try:
+        JSON_temp_user_check = JSON.loads(basic_user_data)
+        if JSON_temp_user_check.get("message") == "Not Found":
+            return {"Error": "User not found"}
+    except:
+        pass
+
     URL_repos_info = URL_BASE + "/users/{}/repos".format(git_user)
     repos_info = await task(URL_repos_info)
 
@@ -45,5 +52,4 @@ async def get_basic_info(git_user: str):
 
 @github_fetcher.get("/github/stats/{user_name}")
 async def get_general_stats(git_user: str):
-    bb = await get_basic_info(git_user)
-    return bb
+    return await get_basic_info(git_user)
