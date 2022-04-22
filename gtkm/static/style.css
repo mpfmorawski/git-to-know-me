@@ -69,7 +69,6 @@ header .logo {
 }
 
 header .btn {
-  font-family: 'Lato';
 font-style: normal;
 font-weight: 800;
 font-size: 32px;
@@ -114,7 +113,6 @@ text-decoration: none;
 
 
 header .dropdown .dropdown-menu {
-  font-family: 'Lato';
 font-style: normal;
 font-weight: 400;
 font-size: 16px;
@@ -139,7 +137,6 @@ text-decoration: none;
 
 .content .textbox {
   position: relative;
-  font-family: 'Lato';
   font-style: normal;
   left: 86px;
   max-width: 800px;
@@ -162,7 +159,6 @@ background-clip: text;
 }
 
 .content .textbox p {
-  font-family: 'Lato';
 font-style: normal;
 font-weight: 400;
 font-size: 32px;
@@ -182,7 +178,6 @@ color: #FFFFFF;
   border-radius: 10px;
   text-decoration: none;
 
-  font-family: 'Lato';
   font-style: normal;
   font-weight: 800;
   font-size: 24px;
@@ -201,7 +196,6 @@ color: #FFFFFF;
   border-radius: 10px;
   text-decoration: none;
 
-  font-family: 'Lato';
   font-style: normal;
   font-weight: 800;
   font-size: 24px;
