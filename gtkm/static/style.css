@@ -1,8 +1,36 @@
+@font-face {
+  font-family: 'Lato';
+  src: url('font/Lato-Black.ttf') format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('font/Lato-Bold.ttf') format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('font/Lato-Regular.ttf') format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('font/Lato-Light.ttf') format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Lato';
+  font-family: 'Lato', sans-serif;
   
   
 }
@@ -54,7 +82,21 @@ padding: 8px 20px;
 text-decoration: none;
 }
 
-header .dropdown a {
+header .dropdown-menu .gitlab-button {
+  font-family: 'Lato';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 19px;
+
+color: #FFFFFF;
+background-color: #a09f9f;
+border-radius: 10px;
+padding: 8px 20px;
+text-decoration: none;
+}
+
+header .dropdown-menu .github-button {
   font-family: 'Lato';
 font-style: normal;
 font-weight: 400;
@@ -68,6 +110,8 @@ padding: 8px 20px;
 
 text-decoration: none;
 }
+
+
 
 header .dropdown .dropdown-menu {
   font-family: 'Lato';
@@ -153,7 +197,7 @@ color: #FFFFFF;
   left: 33%;
   margin-top: 20px;
   padding: 8px 20px;
-  background: linear-gradient(90deg, #E95211 0%, #C1BA1F 100%);
+  background: #a09f9f;
   border-radius: 10px;
   text-decoration: none;
 
@@ -179,9 +223,9 @@ color: #FFFFFF;
   justify-content: flex-end;
 }
 
-.content .textbox .gitlab:hover{
+/*.content .textbox .gitlab:hover{
   transform:scale(1.2,1.2);
-}
+}*/
 
 .content .textbox .github:hover{
   transform:scale(1.2,1.2);
