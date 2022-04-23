@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends, HTTPException, Response, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import RedirectResponse, JSONResponse
 from sqlalchemy.orm import Session
@@ -15,21 +15,20 @@ from .sessions.session_data import SessionData
 Base.metadata.create_all(bind=engine)
 auth = APIRouter()
 
-root_url = "http://127.0.0.1:8000"
-client_id = "<CLIENT_ID>"
-client_secret = "<CLIENT_SECRET>"
-current_user_id = None
+ROOT_URL = "http://127.0.0.1:8000"
+CLIENT_ID = "<CLIENT_ID>"
+CLIENT_SECRET = "<CLIENT_SECRET>"
 
 
 # Endpoint for obtaining user data based on the user ID
 @auth.get("/auth/user/")
-async def get_user(id: str, db: Session = Depends(get_db)):
+async def get_user_data(id: str, db: Session = Depends(get_db)):
     user = get_user(db, id)
     if user:
         user_json = jsonable_encoder(user)
         return JSONResponse(content=user_json)
     else:
-        return "No user with id: " + id + " exists in the database."
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User ID does not exist.")
 
 
 # Endpoint to end current user session
@@ -37,13 +36,14 @@ async def get_user(id: str, db: Session = Depends(get_db)):
 async def logout(response: Response, session_id: uuid.UUID = Depends(cookie)):
     await backend.delete(session_id)
     cookie.delete_from_response(response)
-    return 200
+    response.status_code = status.HTTP_200_OK
+    return response
 
 
 # Endpoint to redirect user after they clicked "Log in with GitHub"
 @auth.get("/auth/github/authorize")
 async def authorize_github():
-    response = RedirectResponse(url=f"http://github.com/login/oauth/authorize?client_id={client_id}")
+    response = RedirectResponse(url=f"http://github.com/login/oauth/authorize?client_id={CLIENT_ID}")
     return response
 
 
@@ -52,7 +52,7 @@ async def authorize_github():
 async def github_authorized(code : str, db: Session = Depends(get_db)):
     # Request exchanging the temporary code for the access token
     headers = {"Accept" : "application/json"}
-    params = {"client_id": client_id, "client_secret": client_secret, "code": code}
+    params = {"client_id": CLIENT_ID, "client_secret": CLIENT_SECRET, "code": code}
     token_request = requests.post("http://github.com/login/oauth/access_token", params=params, headers=headers)
     token = token_request.json()["access_token"]
     # Request to check the logged in user's username
@@ -67,7 +67,7 @@ async def github_authorized(code : str, db: Session = Depends(get_db)):
         user = User(id=user_id, github_login=login, github_token=token, gitlab_login="", gitlab_token="")
         create_user(db=db, user=user)
     # Create user session and cookie
-    response = RedirectResponse(url=root_url + "/index.html")
+    response = RedirectResponse(url=ROOT_URL + "/index.html")
     session = uuid.uuid4()
     data = SessionData(id=user.id)
     await backend.create(session, data)
