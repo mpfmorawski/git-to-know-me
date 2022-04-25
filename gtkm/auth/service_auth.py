@@ -15,7 +15,6 @@ from .sessions.session_data import SessionData
 Base.metadata.create_all(bind=engine)
 auth = APIRouter()
 
-ROOT_URL = "http://127.0.0.1:8000"
 CLIENT_ID = "<CLIENT_ID>"
 CLIENT_SECRET = "<CLIENT_SECRET>"
 
@@ -41,14 +40,14 @@ async def logout(response: Response, session_id: uuid.UUID = Depends(cookie)):
 
 
 # Endpoint to redirect user after they clicked "Log in with GitHub"
-@auth.get("/auth/github/authorize")
+@auth.get("/api/auth/github/authorize")
 async def authorize_github():
     response = RedirectResponse(url=f"http://github.com/login/oauth/authorize?client_id={CLIENT_ID}")
     return response
 
 
 # Endpoint that GitHub redirects the user to after successful authorization
-@auth.get("/auth/github/authorized", response_model=User)
+@auth.get("/api/auth/github/authorized", response_model=User)
 async def github_authorized(code : str, db: Session = Depends(get_db)):
     # Request exchanging the temporary code for the access token
     headers = {"Accept" : "application/json"}
@@ -67,7 +66,7 @@ async def github_authorized(code : str, db: Session = Depends(get_db)):
         user = User(id=user_id, github_login=login, github_token=token, gitlab_login="", gitlab_token="")
         create_user(db=db, user=user)
     # Create user session and cookie
-    response = RedirectResponse(url=ROOT_URL + "/index.html")
+    response = RedirectResponse(url="/index.html")
     session = uuid.uuid4()
     data = SessionData(id=user.id)
     await backend.create(session, data)
