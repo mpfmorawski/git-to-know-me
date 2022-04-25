@@ -1,6 +1,7 @@
 name: Formatting python code
 
-on:
+on: |
+  workflow_dispatch
   push:
     paths:
     - '**.py'
