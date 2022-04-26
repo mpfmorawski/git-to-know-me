@@ -4,6 +4,7 @@ from fastapi.responses import RedirectResponse, JSONResponse
 from sqlalchemy.orm import Session
 import requests
 import uuid
+import os
 
 from .database.database import Base, engine, get_db
 from .database.user_schema import User
@@ -15,17 +16,16 @@ from .sessions.session_data import SessionData
 Base.metadata.create_all(bind=engine)
 auth = APIRouter()
 
-CLIENT_ID = "<CLIENT_ID>"
-CLIENT_SECRET = "<CLIENT_SECRET>"
+CLIENT_ID = os.environ.get('CLIENT_ID')
+CLIENT_SECRET = os.environ.get('CLIENT_SECRET')
 
 
 # Endpoint for obtaining user data based on the user ID
-@auth.get("/auth/user/")
+@auth.get("/auth/user/", response_model=User)
 async def get_user_data(id: str, db: Session = Depends(get_db)):
     user = get_user(db, id)
     if user:
-        user_json = jsonable_encoder(user)
-        return JSONResponse(content=user_json)
+        return user
     else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User ID does not exist.")
 
@@ -47,7 +47,7 @@ async def authorize_github():
 
 
 # Endpoint that GitHub redirects the user to after successful authorization
-@auth.get("/api/auth/github/authorized", response_model=User)
+@auth.get("/api/auth/github/authorized")
 async def github_authorized(code : str, db: Session = Depends(get_db)):
     # Request exchanging the temporary code for the access token
     headers = {"Accept" : "application/json"}
