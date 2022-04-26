@@ -7,8 +7,8 @@ from ..database.database import get_db
 from ..database.database_operations import get_user
 
 
-
 class Verifier(SessionVerifier[UUID, SessionData]):
+
     def __init__(
         self,
         *,

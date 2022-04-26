@@ -5,7 +5,6 @@ from fastapi import HTTPException
 from .session_data import SessionData
 from .session_verifier import Verifier
 
-
 cookie_params = CookieParameters()
 
 cookie = SessionCookie(
@@ -22,5 +21,6 @@ verifier = Verifier(
     identifier="general_verifier",
     auto_error=False,
     backend=backend,
-    auth_http_exception=HTTPException(status_code=403, detail="invalid session"),
+    auth_http_exception=HTTPException(status_code=403,
+                                      detail="invalid session"),
 )
