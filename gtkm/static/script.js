@@ -1,3 +1,17 @@
+const getUserData = function (user_name) {
+    fetch(`http://127.0.0.1/github/stats/${user_name}`)
+      .then((response) => {
+        response.json();
+      })
+      .then((data) => {
+        console.log(data);
+      });
+  };
+  
+  const user = `kamilwil`;
+
+  getUserData(user);
+  
   document.addEventListener("DOMContentLoaded", () => {  
     let nameLabelList = document.querySelectorAll(".profile-name");
     let usernameLabelList = document.querySelectorAll(".profile-username");
@@ -11,14 +25,4 @@
     }
   });
 
-/*  const getUserData = function (user_name) {
-    fetch(`http://127.0.0.1/github/stats/${user_name}`)
-      .then((response) => {
-        response.json();
-      })
-      .then((data) => {
-        console.log(data);
-      });
-  };
 
-  */
