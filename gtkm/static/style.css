@@ -397,8 +397,14 @@ header .logout-panel .profile-username{
 
 header .logout-panel .logout-button{
   position: relative;
-  width: 160px;
-  height: 40px;
-  line-height: 24px;
+  left: 0px;
+  padding: 8px 10px;
   font-size: 24px;
+  background: linear-gradient(90deg, #E95211 0%, #C1BA1F 100%);
+  border-radius: 10px;
+  text-decoration: none;
+  text-align: justify;
+  color: #FFFFFF;
+  font-style: normal;
+  font-weight: 800;
 }
