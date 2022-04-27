@@ -24,9 +24,16 @@ def jsons_parser(basic_user_data: str, repos_info: str):
         stargaze_count = stargaze_count+element.get("stargazers_count")
         forks_count = forks_count + element.get("forks_count")
 
+    if JSON_basic_user_data.get("name") != None:
+        user_name = JSON_basic_user_data.get("name").split()[0]
+        user_surname = JSON_basic_user_data.get("name").split()[1]
+    else:
+        user_name = None
+        user_surname = None
+
     ''' Fetched and parsed user data '''
-    json_summary_file = {'name': JSON_basic_user_data.get("name").split()[0],
-                         'surname': JSON_basic_user_data.get("name").split()[1],
+    json_summary_file = {'name': user_name,
+                         'surname': user_surname,
                          'user_name': JSON_basic_user_data.get("login"),
                          'stargaze_count': stargaze_count,
                          'repos_count': len(JSON_repos_info),
