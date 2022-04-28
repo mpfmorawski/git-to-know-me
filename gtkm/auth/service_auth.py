@@ -12,7 +12,6 @@ from .sessions.session import backend, cookie, verifier
 from .sessions.session_data import SessionData
 from . import credentials
 
-
 Base.metadata.create_all(bind=engine)
 auth = APIRouter()
 
