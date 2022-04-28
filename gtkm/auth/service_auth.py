@@ -35,8 +35,8 @@ async def get_user_data(id: str, db: Session = Depends(get_db)):
 @auth.get("/api/auth/logout/")
 async def logout(response: Response, session_id: uuid.UUID = Depends(cookie)):
     await backend.delete(session_id)
+    response = RedirectResponse(url="/index.html")
     cookie.delete_from_response(response)
-    response.status_code = status.HTTP_200_OK
     return response
 
 
