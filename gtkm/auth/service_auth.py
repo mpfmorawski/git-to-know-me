@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Response, status
-from fastapi.encoders import jsonable_encoder
-from fastapi.responses import RedirectResponse, JSONResponse
+from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 import requests
 import uuid
@@ -11,10 +10,13 @@ from .database.user_schema import User
 from .database.database_operations import get_user, get_user_by_github_login, create_user
 from .sessions.session import backend, cookie, verifier
 from .sessions.session_data import SessionData
+from . import credentials
+
 
 Base.metadata.create_all(bind=engine)
 auth = APIRouter()
 
+credentials.add_to_env()
 CLIENT_ID = os.environ.get('CLIENT_ID')
 CLIENT_SECRET = os.environ.get('CLIENT_SECRET')
 
@@ -79,7 +81,7 @@ async def github_authorized(code: str, db: Session = Depends(get_db)):
                     gitlab_token="")
         create_user(db=db, user=user)
     # Create user session and cookie
-    response = RedirectResponse(url="/index.html")
+    response = RedirectResponse(url="/stats.html")
     session = uuid.uuid4()
     data = SessionData(id=user.id)
     await backend.create(session, data)
