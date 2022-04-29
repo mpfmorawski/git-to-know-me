@@ -1,5 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Cookie
 from fastapi.responses import JSONResponse
+from typing import Optional
 import json as JSON
 import httpx
 #import requests
@@ -11,11 +12,17 @@ github_fetcher = APIRouter()
 URL_BASE = "https://api.github.com"
 
 
-async def task(URL):
-    async with httpx.AsyncClient() as client:
-        response = await client.get(URL)
-    return response.text
-
+async def task(URL, cookie = None):
+    if cookie is None:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(URL)
+        return response.text
+    else:
+        cookies = {'gtkm_cookie' : cookie}
+        async with httpx.AsyncClient() as client:
+            response = await client.get(URL, cookies=cookies)
+        return response
+        
 ''' Function manage JSON name filed '''
 
 
@@ -58,8 +65,20 @@ def jsons_parser(basic_user_data: str, repos_info: str):
 
     return json_summary_file
 
+async def get_user_name(gtkm_cookie):
+    if gtkm_cookie:
+        user_id = await task('http://127.0.0.1:8000/auth/user/id', cookie=gtkm_cookie)
 
-async def get_basic_info(git_user: str):
+        user_name = await task("http://127.0.0.1:8000/auth/user/?id="+user_id.json()["id"], cookie=gtkm_cookie)
+
+        return user_name.json()["github_login"]
+
+    return None
+
+async def get_basic_info(gtkm_cookie):
+
+    git_user = await get_user_name(gtkm_cookie)
+
     URL_basic_user_data = URL_BASE + f"/users/{git_user}"
     basic_user_data = await task(URL_basic_user_data)
 
@@ -78,6 +97,6 @@ async def get_basic_info(git_user: str):
     return jsons_parser(basic_user_data, repos_info)
 
 
-@github_fetcher.get("/github/stats/{user_name}", response_model=BasicUserData)
-async def get_general_stats_github(user_name: str) -> JSONResponse:
-    return JSONResponse(await get_basic_info(user_name))
+@github_fetcher.get("/github/stats/general_user", response_model=BasicUserData)
+async def get_general_stats_github(gtkm_cookie: Optional[str] = Cookie(None)) -> JSONResponse:
+    return JSONResponse(await get_basic_info(gtkm_cookie))
