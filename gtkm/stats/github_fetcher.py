@@ -2,6 +2,9 @@ from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 import json as JSON
 import httpx
+#import requests
+
+from ..stats.data_schema import BasicUserData
 
 github_fetcher = APIRouter()
 
@@ -13,7 +16,9 @@ async def task(URL):
         response = await client.get(URL)
     return response.text
 
-''' Function manage name JSON name filed '''
+''' Function manage JSON name filed '''
+
+
 def extract_name(JSON_basic_user_data: JSON):
     if JSON_basic_user_data.get("name") != None:
         user_name_data = JSON_basic_user_data.get("name")
@@ -29,6 +34,7 @@ def extract_name(JSON_basic_user_data: JSON):
         user_surname = None
 
     return user_name, user_surname
+
 
 def jsons_parser(basic_user_data: str, repos_info: str):
     JSON_basic_user_data = JSON.loads(basic_user_data)
@@ -72,6 +78,6 @@ async def get_basic_info(git_user: str):
     return jsons_parser(basic_user_data, repos_info)
 
 
-@github_fetcher.get("/github/stats/{user_name}")
+@github_fetcher.get("/github/stats/{user_name}", response_model=BasicUserData)
 async def get_general_stats_github(user_name: str) -> JSONResponse:
     return JSONResponse(await get_basic_info(user_name))
