@@ -13,6 +13,22 @@ async def task(URL):
         response = await client.get(URL)
     return response.text
 
+''' Function manage name JSON name filed '''
+def extract_name(JSON_basic_user_data: JSON):
+    if JSON_basic_user_data.get("name") != None:
+        user_name_data = JSON_basic_user_data.get("name")
+
+        if len(user_name_data) == 1:
+            user_name = user_name_data
+            user_surname = None
+        else:
+            user_name = user_name_data.split()[0]
+            user_surname = user_name_data.split()[1]
+    else:
+        user_name = None
+        user_surname = None
+
+    return user_name, user_surname
 
 def jsons_parser(basic_user_data: str, repos_info: str):
     JSON_basic_user_data = JSON.loads(basic_user_data)
@@ -24,12 +40,7 @@ def jsons_parser(basic_user_data: str, repos_info: str):
         stargaze_count = stargaze_count+element.get("stargazers_count")
         forks_count = forks_count + element.get("forks_count")
 
-    if JSON_basic_user_data.get("name") != None:
-        user_name = JSON_basic_user_data.get("name").split()[0]
-        user_surname = JSON_basic_user_data.get("name").split()[1]
-    else:
-        user_name = None
-        user_surname = None
+    user_name, user_surname = extract_name(JSON_basic_user_data)
 
     ''' Fetched and parsed user data '''
     json_summary_file = {'name': user_name,
@@ -46,7 +57,7 @@ async def get_basic_info(git_user: str):
     URL_basic_user_data = URL_BASE + f"/users/{git_user}"
     basic_user_data = await task(URL_basic_user_data)
 
-    ''' Check if user exist, if not return error message'''
+    ''' Check if user exist, if not return error message '''
     try:
         JSON_temp_user_check = JSON.loads(basic_user_data)
         if JSON_temp_user_check.get("message") == "Not Found":
