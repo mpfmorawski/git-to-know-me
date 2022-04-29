@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Response, status
-from fastapi.encoders import jsonable_encoder
-from fastapi.responses import RedirectResponse, JSONResponse
+from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 import requests
 import uuid
@@ -34,8 +33,8 @@ async def get_user_data(id: str, db: Session = Depends(get_db)):
 @auth.get("/api/auth/logout/")
 async def logout(response: Response, session_id: uuid.UUID = Depends(cookie)):
     await backend.delete(session_id)
+    response = RedirectResponse(url="/index.html")
     cookie.delete_from_response(response)
-    response.status_code = status.HTTP_200_OK
     return response
 
 
@@ -79,7 +78,7 @@ async def github_authorized(code: str, db: Session = Depends(get_db)):
                     gitlab_token="")
         create_user(db=db, user=user)
     # Create user session and cookie
-    response = RedirectResponse(url="/index.html")
+    response = RedirectResponse(url="/stats.html")
     session = uuid.uuid4()
     data = SessionData(id=user.id)
     await backend.create(session, data)
