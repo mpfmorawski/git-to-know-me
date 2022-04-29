@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Response, status
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
-from dotenv import load_dotenv
 import requests
 import uuid
 import os
@@ -15,7 +14,6 @@ from .sessions.session_data import SessionData
 Base.metadata.create_all(bind=engine)
 auth = APIRouter()
 
-load_dotenv('gtkm/auth/.env')
 CLIENT_ID = os.environ.get('CLIENT_ID')
 CLIENT_SECRET = os.environ.get('CLIENT_SECRET')
 

@@ -9,4 +9,4 @@ __pycache__
 *.db
 
 # Credentials
-gtkm/auth/.env
+.env
