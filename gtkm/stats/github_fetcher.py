@@ -12,17 +12,18 @@ github_fetcher = APIRouter()
 URL_BASE = "https://api.github.com"
 
 
-async def task(URL, cookie = None):
+async def task(URL, cookie=None):
     if cookie is None:
         async with httpx.AsyncClient() as client:
             response = await client.get(URL)
         return response.text
     else:
-        cookies = {'gtkm_cookie' : cookie}
+        cookies = {'gtkm_cookie': cookie}
         async with httpx.AsyncClient() as client:
             response = await client.get(URL, cookies=cookies)
         return response
-        
+
+
 ''' Function manage JSON name filed '''
 
 
@@ -50,30 +51,36 @@ def jsons_parser(basic_user_data: str, repos_info: str):
     stargaze_count = 0
     forks_count = 0
     for element in JSON_repos_info:
-        stargaze_count = stargaze_count+element.get("stargazers_count")
+        stargaze_count = stargaze_count + element.get("stargazers_count")
         forks_count = forks_count + element.get("forks_count")
 
     user_name, user_surname = extract_name(JSON_basic_user_data)
-
     ''' Fetched and parsed user data '''
-    json_summary_file = {'name': user_name,
-                         'surname': user_surname,
-                         'user_name': JSON_basic_user_data.get("login"),
-                         'stargaze_count': stargaze_count,
-                         'repos_count': len(JSON_repos_info),
-                         'forks_count': forks_count}
+    json_summary_file = {
+        'name': user_name,
+        'surname': user_surname,
+        'user_name': JSON_basic_user_data.get("login"),
+        'stargaze_count': stargaze_count,
+        'repos_count': len(JSON_repos_info),
+        'forks_count': forks_count
+    }
 
     return json_summary_file
 
+
 async def get_user_name(gtkm_cookie):
     if gtkm_cookie:
-        user_id = await task('http://127.0.0.1:8000/auth/user/id', cookie=gtkm_cookie)
+        user_id = await task('http://127.0.0.1:8000/auth/user/id',
+                             cookie=gtkm_cookie)
 
-        user_name = await task("http://127.0.0.1:8000/auth/user/?id="+user_id.json()["id"], cookie=gtkm_cookie)
+        user_name = await task("http://127.0.0.1:8000/auth/user/?id=" +
+                               user_id.json()["id"],
+                               cookie=gtkm_cookie)
 
         return user_name.json()["github_login"]
 
     return None
+
 
 async def get_basic_info(gtkm_cookie):
 
@@ -81,7 +88,6 @@ async def get_basic_info(gtkm_cookie):
 
     URL_basic_user_data = URL_BASE + f"/users/{git_user}"
     basic_user_data = await task(URL_basic_user_data)
-
     ''' Check if user exist, if not return error message '''
     try:
         JSON_temp_user_check = JSON.loads(basic_user_data)
@@ -92,11 +98,11 @@ async def get_basic_info(gtkm_cookie):
 
     URL_repos_info = URL_BASE + f"/users/{git_user}/repos"
     repos_info = await task(URL_repos_info)
-
     ''' Return parsed user and repos info'''
     return jsons_parser(basic_user_data, repos_info)
 
 
 @github_fetcher.get("/github/stats/general_user", response_model=BasicUserData)
-async def get_general_stats_github(gtkm_cookie: Optional[str] = Cookie(None)) -> JSONResponse:
+async def get_general_stats_github(gtkm_cookie: Optional[str] = Cookie(
+    None)) -> JSONResponse:
     return JSONResponse(await get_basic_info(gtkm_cookie))
