@@ -21,7 +21,7 @@ class Verifier(SessionVerifier[UUID, SessionData]):
         self._auto_error = auto_error
         self._backend = backend
         self._auth_http_exception = auth_http_exception
-        self._user_db = get_db()
+        self._user_db = next(get_db())
 
     @property
     def identifier(self):
@@ -44,7 +44,7 @@ class Verifier(SessionVerifier[UUID, SessionData]):
         return self._user_db
 
     def verify_session(self, model: SessionData) -> bool:
-        user = get_user(next(self.user_db), model.id)
+        user = get_user(self.user_db, model.id)
         existing_ids = self.backend.data.values()
         if model in existing_ids and user:
             return True
