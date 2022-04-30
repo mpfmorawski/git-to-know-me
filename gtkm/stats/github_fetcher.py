@@ -103,7 +103,8 @@ async def get_basic_info(gtkm_cookie):
 
 
 @github_fetcher.get("/github/stats/general_user", response_model=BasicUserData)
-async def get_general_stats_github(gtkm_cookie: Optional[str] = Cookie(None)) -> JSONResponse:
+async def get_general_stats_github(gtkm_cookie: Optional[str] = Cookie(
+    None)) -> JSONResponse:
     '''
     User is identify by cookie file.
     '''
