@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Cookie
+from fastapi import APIRouter, Cookie, Request
 from fastapi.responses import JSONResponse
 from typing import Optional
 import json as JSON
@@ -98,5 +98,8 @@ async def get_basic_info(gtkm_cookie):
 
 
 @github_fetcher.get("/github/stats/general_user", response_model=BasicUserData)
-async def get_general_stats_github(gtkm_cookie: Optional[str] = Cookie(None)) -> JSONResponse:
+async def get_general_stats_github(request: Request, gtkm_cookie: Optional[str] = Cookie(None)) -> JSONResponse:
+    '''
+    User is identify by cookie file.
+    '''
     return JSONResponse(await get_basic_info(gtkm_cookie))
