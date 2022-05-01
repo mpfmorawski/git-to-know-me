@@ -11,5 +11,6 @@ pip3 install -r requirements.txt
 ## Run
 
 ```bash
-python -c "from dotenv import load_dotenv; import uvicorn; load_dotenv(); uvicorn.run('gtkm.main:app', reload=True)"
+source .env #env file with secret tokens
+uvicorn gtkm.main:app --reload
 ```
