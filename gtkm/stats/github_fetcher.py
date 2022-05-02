@@ -3,16 +3,15 @@ from fastapi.responses import JSONResponse
 from typing import Optional
 import json as JSON
 import httpx
-#import requests
 
-from ..stats.data_schema import BasicUserData
+from ..stats.fetched_data_schema import BasicUserData
 
 github_fetcher = APIRouter()
 
 URL_BASE = "https://api.github.com"
 
 
-async def task(URL, cookie=None):
+async def get_endpoint_data(URL: str, cookie=None):
     if cookie is None:
         async with httpx.AsyncClient() as client:
             response = await client.get(URL)
@@ -24,9 +23,7 @@ async def task(URL, cookie=None):
         return response
 
 
-''' Function manage JSON name filed '''
-
-
+# Function manage JSON name filed
 def extract_name(JSON_basic_user_data: JSON):
     if JSON_basic_user_data.get("name") != None:
         user_name_data = JSON_basic_user_data.get("name")
@@ -70,10 +67,10 @@ def jsons_parser(basic_user_data: str, repos_info: str):
 
 async def get_user_name(gtkm_cookie):
     if gtkm_cookie:
-        user_id = await task('http://127.0.0.1:8000/auth/user/id',
+        user_id = await get_endpoint_data('http://127.0.0.1:8000/auth/user/id',
                              cookie=gtkm_cookie)
 
-        user_name = await task("http://127.0.0.1:8000/auth/user/?id=" +
+        user_name = await get_endpoint_data("http://127.0.0.1:8000/auth/user/?id=" +
                                user_id.json()["id"],
                                cookie=gtkm_cookie)
 
@@ -87,7 +84,7 @@ async def get_basic_info(gtkm_cookie):
     git_user = await get_user_name(gtkm_cookie)
 
     URL_basic_user_data = URL_BASE + f"/users/{git_user}"
-    basic_user_data = await task(URL_basic_user_data)
+    basic_user_data = await get_endpoint_data(URL_basic_user_data)
     ''' Check if user exist, if not return error message '''
     try:
         JSON_temp_user_check = JSON.loads(basic_user_data)
@@ -97,7 +94,7 @@ async def get_basic_info(gtkm_cookie):
         pass
 
     URL_repos_info = URL_BASE + f"/users/{git_user}/repos"
-    repos_info = await task(URL_repos_info)
+    repos_info = await get_endpoint_data(URL_repos_info)
     ''' Return parsed user and repos info'''
     return jsons_parser(basic_user_data, repos_info)
 

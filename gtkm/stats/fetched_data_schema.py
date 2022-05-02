@@ -5,6 +5,6 @@ class BasicUserData(BaseModel):
     name: str
     surname: str
     user_name: str
-    stargaze_count: str
-    repos_count: str
-    forks_count: str
+    stargaze_count: int
+    repos_count: int
+    forks_count: int
