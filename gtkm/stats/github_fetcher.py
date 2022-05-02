@@ -68,11 +68,11 @@ def jsons_parser(basic_user_data: str, repos_info: str):
 async def get_user_name(gtkm_cookie):
     if gtkm_cookie:
         user_id = await get_endpoint_data('http://127.0.0.1:8000/auth/user/id',
-                             cookie=gtkm_cookie)
+                                          cookie=gtkm_cookie)
 
-        user_name = await get_endpoint_data("http://127.0.0.1:8000/auth/user/?id=" +
-                               user_id.json()["id"],
-                               cookie=gtkm_cookie)
+        user_name = await get_endpoint_data(
+            "http://127.0.0.1:8000/auth/user/?id=" + user_id.json()["id"],
+            cookie=gtkm_cookie)
 
         return user_name.json()["github_login"]
 
