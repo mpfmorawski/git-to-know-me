@@ -4,3 +4,9 @@ __pycache__
 
 # Development
 .vscode
+
+# Databases
+*.db
+
+# Credentials
+.env

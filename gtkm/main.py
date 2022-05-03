@@ -1,3 +1,5 @@
+import os
+
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
@@ -18,4 +20,6 @@ async def redirect_typer():
     return RedirectResponse("/index.html")
 
 
-app.mount("/", StaticFiles(directory="static"), name="static")
+STATIC_DIR = os.path.dirname(__file__) + "/static"
+print(STATIC_DIR)
+app.mount("/", StaticFiles(directory=STATIC_DIR), name="static")
