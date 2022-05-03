@@ -3,6 +3,7 @@ uvicorn
 python-dotenv
 requests
 sqlalchemy
+StrEnum
 fastapi-sessions
 httpx
 psycopg2
