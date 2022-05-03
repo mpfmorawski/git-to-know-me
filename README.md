@@ -10,7 +10,8 @@ pip3 install -r requirements.txt
 
 ## Run
 
+To run you need proper `.env` file with secret tokens
+
 ```bash
-source .env #env file with secret tokens
-uvicorn gtkm.main:app --reload
+uvicorn gtkm.main:app --reload --env-file .env
 ```
