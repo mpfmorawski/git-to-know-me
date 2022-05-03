@@ -1,3 +1,4 @@
+import logging
 import os
 
 from fastapi import FastAPI
@@ -9,6 +10,7 @@ from .stats.stats_aggregator import stats
 from .stats.github_fetcher import github_fetcher
 
 app = FastAPI()
+logger = logging.getLogger("fastapi")
 
 app.include_router(auth)
 app.include_router(stats)
@@ -23,3 +25,7 @@ async def redirect_typer():
 STATIC_DIR = os.path.dirname(__file__) + "/static"
 print(STATIC_DIR)
 app.mount("/", StaticFiles(directory=STATIC_DIR), name="static")
+
+client_id = os.environ.get("CLIENT_ID")
+if not client_id:
+    logger.warning("MISSING CLIENT_ID")
