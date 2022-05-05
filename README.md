@@ -13,5 +13,6 @@ pip3 install -r requirements.txt
 To run you need proper `.env` file with secret tokens
 
 ```bash
-uvicorn gtkm.main:app --reload --env-file .env
+docker-compose build
+docker-compose up
 ```
