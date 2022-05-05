@@ -56,7 +56,7 @@ header{
   left:0;
   width: 100%;
   height: 100px;
-  padding: 20px 86px;
+  padding: 20px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -223,4 +223,188 @@ color: #FFFFFF;
 
 .content .textbox .github:hover{
   transform:scale(1.2,1.2);
+}
+
+.content .generic {
+  padding: 10px;
+  display: inline-block;
+  margin: 10px;
+  position: relative;
+  z-index: 0;
+  background: #393939;
+  border-radius: 10px;
+}
+.content .generic::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  padding: 2px;
+  border-radius: 10px;
+  background: linear-gradient(99.85deg, #E95211 0%, rgba(229, 125, 23, 0) 26.67%, rgba(224, 179, 31, 0) 75.62%, #DDD624 100%);
+  -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+          mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+
+}
+
+.content .stats-grid{
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  column-gap: 20px;
+  row-gap: 20px;
+
+  position: relative;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+}
+
+.content .profile{
+  height: 140px;
+  grid-column: 1 / span 3;
+
+  min-width: 465px;
+  display: flex;
+
+  color: #FFFFFF;
+}
+
+.content .general-stats{
+  height: 140px;
+  grid-column: 4 / span 2;
+
+  min-width: 235px;
+  display: flex;
+}
+
+@media (max-width: 800px){
+  .content .stats-grid{
+    grid-template-columns: 1fr;
+  }
+  .content .profile, .content .general-stats{
+    grid-column: 1 / span 1;
+  }
+}
+
+.content .profile .profile-picture{
+  margin: 10px;
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  position: relative;
+  z-index: 0;
+  background: #494949;
+  border-radius: 50px;
+}
+
+.content .profile .profile-data{
+  position: relative;
+  left: 86px;
+
+}
+
+.content .profile .profile-name{
+  position: relative;
+  margin: 10px;
+  text-align: left;
+
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 48px;
+  line-height: 58px;
+}
+
+.content .profile .profile-username{
+  position: relative;
+  margin: 10px;
+
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 32px;
+}
+
+header .profile-picture{
+  margin: 10px;
+  width: 60px;
+  height: 60px;
+  position: relative;
+  z-index: 1;
+  background: #494949;
+  border-radius: 30px;
+}
+
+header .logout-panel{
+  background: #393939;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  margin: 0px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 40px;
+  padding-right: 120px;
+
+  color: #FFFFFF;
+}
+
+header .logout-panel .profile-data{
+  position: relative;
+  padding-bottom: 10px;
+}
+
+
+
+header .logout-panel .profile-name{
+  position: relative;
+  margin: 10px;
+  text-align: left;
+
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 27px;
+
+
+  
+}
+
+header .logout-panel .profile-username{
+  position: relative;
+  margin: 10px;
+
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+}
+
+header .logout-panel .logout-button{
+  position: relative;
+  left: 0px;
+  padding: 8px 10px;
+  font-size: 24px;
+  background: linear-gradient(90deg, #E95211 0%, #C1BA1F 100%);
+  border-radius: 10px;
+  text-decoration: none;
+  text-align: justify;
+  color: #FFFFFF;
+  font-style: normal;
+  font-weight: 800;
 }
