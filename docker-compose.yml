@@ -1,0 +1,29 @@
+version: "3.1"
+
+services:
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=authDB
+      - POSTGRES_USER=userDB
+      - POSTGRES_PASSWORD=passwd123
+  web:
+    build: .
+    restart: always
+    command: uvicorn gtkm.main:app --reload --host 0.0.0.0 --env-file .env
+    volumes:
+      - .:/gtkm/
+    ports:
+      - "8000:8000"
+    links:
+      - db
+    environment:
+      - POSTGRES_DB=authDB
+      - POSTGRES_USER=userDB
+      - POSTGRES_PASSWORD=passwd123
+      - POSTGRES_HOST=db
+    depends_on:
+      - db
