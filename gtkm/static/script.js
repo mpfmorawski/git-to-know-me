@@ -4,7 +4,7 @@ let githubUserData = {
   githubUsername: "namesurname",
 };
 
-const getUserData = function (dataObject) {
+const fetchUserData = function (dataObject) {
     fetch(`/github/stats/general_user`)
       .then((response) => {
         if (!response.ok){
@@ -38,7 +38,7 @@ const getUserData = function (dataObject) {
       });
   };
   
-getUserData(githubUserData);
+fetchUserData(githubUserData);
 
 
 
