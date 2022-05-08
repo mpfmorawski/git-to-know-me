@@ -2,27 +2,13 @@ from fastapi import APIRouter, Cookie, Request
 from fastapi.responses import JSONResponse
 from typing import Optional
 import json as JSON
-import httpx
 
 from ..stats.fetched_data_schema import BasicUserData
-from ..common import gen_url
+from ..common import gen_url, get_endpoint_data
 
 github_fetcher = APIRouter()
 
 URL_BASE = "https://api.github.com"
-
-
-async def get_endpoint_data(URL: str, cookie=None):
-    if cookie is None:
-        async with httpx.AsyncClient() as client:
-            response = await client.get(URL)
-        return response.text
-    else:
-        cookies = {'gtkm_cookie': cookie}
-        async with httpx.AsyncClient() as client:
-            response = await client.get(URL, cookies=cookies)
-        return response
-
 
 # Function manage JSON name filed
 def extract_name(JSON_basic_user_data: JSON):
