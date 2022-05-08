@@ -38,8 +38,8 @@ class GithubFetchBasicData(FetcherBase):
         for data_part in self.config["basic info"]:
             parsing_data = getattr(self, "_get_" + data_part["function"])
 
-            status = await parsing_data(self.URL_BASE +
-                                        str(data_part["URL"]).format(user_name))
+            status = await parsing_data(
+                self.URL_BASE + str(data_part["URL"]).format(user_name))
 
         return self.user_data_json_file
 
@@ -59,7 +59,6 @@ class GithubFetchBasicData(FetcherBase):
         basic_user_data = await get_endpoint_data(URL)
 
         JSON_basic_user_data = json.loads(basic_user_data)
-
         ''' Check if user exist, if not return error message '''
         if JSON_basic_user_data.get("message") == "Not Found":
             # TODO: Error handler
