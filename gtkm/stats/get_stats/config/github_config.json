@@ -1,0 +1,12 @@
+{
+    "basic info": [
+        {
+            "URL": "/users/{}",
+            "function": "basic_user_data"
+        },
+        {
+            "URL": "/users/{}/repos",
+            "function": "user_repos_info"
+        }
+    ]
+}
