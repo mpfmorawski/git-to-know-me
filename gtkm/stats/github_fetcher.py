@@ -10,6 +10,7 @@ github_fetcher = APIRouter()
 
 URL_BASE = "https://api.github.com"
 
+
 # Function manage JSON name filed
 def extract_name(JSON_basic_user_data: JSON):
     if JSON_basic_user_data.get("name") != None:

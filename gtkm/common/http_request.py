@@ -1,9 +1,10 @@
 import httpx
-
 '''
 Simple function for downloading data from passed endpoint address.
 Function accept cookie file if necessary.
 '''
+
+
 async def get_endpoint_data(URL: str, cookie=None):
     if cookie is None:
         async with httpx.AsyncClient() as client:
