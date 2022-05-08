@@ -8,6 +8,7 @@ from ..stats.fetched_data_schema import BasicUserData
 
 github_fetcher = APIRouter()
 
+
 @github_fetcher.get("/github/stats/general_user", response_model=BasicUserData)
 async def get_general_stats_github(gtkm_cookie: Optional[str] = Cookie(
     None)) -> JSONResponse:
