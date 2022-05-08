@@ -72,6 +72,10 @@ class GithubFetchBasicData(FetcherBase):
         self.user_data_json_file['surname'] = user_surname
         self.user_data_json_file['user_name'] = JSON_basic_user_data.get(
             "login")
+        self.user_data_json_file['avatar_url'] = JSON_basic_user_data.get(
+            "avatar_url")
+
+        print(self.user_data_json_file)
 
     # Function manage JSON name filed
 
