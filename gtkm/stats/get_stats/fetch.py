@@ -109,3 +109,14 @@ class GithubFetchBasicData(FetcherBase):
         self.user_data_json_file['stargaze_count'] = stargaze_count
         self.user_data_json_file['repos_count'] = len(JSON_repos_info)
         self.user_data_json_file['forks_count'] = forks_count
+
+
+class GithubFetchLanguageData(FetcherBase):
+
+    # Fetcher config class
+    CONFIG_DIR = os.path.dirname(__file__) + "/config"
+    PATH = CONFIG_DIR + "/github_config.json"
+
+    def __init__(self, gtkm_cookie):
+        self.gtkm_cookie = gtkm_cookie
+        super().__init__(self.PATH)

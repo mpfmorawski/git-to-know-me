@@ -8,5 +8,19 @@
             "URL": "/users/{}/repos",
             "function": "user_repos_info"
         }
+    ],
+
+    "language info":[
+        {
+            "URL": "TEST",
+            "function": "TEST"
+        }
+    ],
+    
+    "repos info":[
+        {
+            "URL": "ETST2",
+            "function": "TEST2"
+        }
     ]
 }
