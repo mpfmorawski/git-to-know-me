@@ -271,7 +271,7 @@ color: #FFFFFF;
   height: 140px;
   grid-column: 1 / span 3;
 
-  min-width: 465px;
+  min-width: fit-content;
   display: flex;
 
   color: #FFFFFF;
@@ -281,7 +281,7 @@ color: #FFFFFF;
   height: 140px;
   grid-column: 4 / span 2;
 
-  min-width: 235px;
+  min-width: fit-content;
   display: flex;
   justify-content: space-around;
 }
@@ -308,7 +308,8 @@ color: #FFFFFF;
 
 .content .profile .profile-data{
   position: relative;
-  left: 86px;
+  margin-left: 10px;
+  margin-right: 10px;
 
 }
 
@@ -316,6 +317,7 @@ color: #FFFFFF;
   position: relative;
   margin: 10px;
   text-align: left;
+  white-space: nowrap;
 
   font-family: 'Lato';
   font-style: normal;
@@ -338,6 +340,8 @@ color: #FFFFFF;
 .content .general-stats .general-slot{
   position: relative;
   height: 118px;
+  margin-left: 10px;
+  margin-right: 10px;
   display: flex;
   flex-direction: column;
   text-align: center;
