@@ -283,6 +283,7 @@ color: #FFFFFF;
 
   min-width: 235px;
   display: flex;
+  justify-content: space-around;
 }
 
 @media (max-width: 800px){
@@ -332,6 +333,38 @@ color: #FFFFFF;
   font-weight: 300;
   font-size: 18px;
   line-height: 32px;
+}
+
+.content .general-stats .general-slot{
+  position: relative;
+  height: 118px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  color: #FFFFFF;
+}
+
+.content .general-stats .general-slot h4{
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 64px;
+  line-height: 77px;
+
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.content .general-stats .general-slot h5{
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 38px;
+
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 header .profile-picture{
