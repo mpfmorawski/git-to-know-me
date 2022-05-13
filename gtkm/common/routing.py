@@ -20,4 +20,16 @@ SERVICE_PORTS = {
 
 def gen_url(endpoint: str) -> str:
     '''Generates full URL from selected API endpoint'''
-    return "http://127.0.0.1:8000" + endpoint
+    if "api" in endpoint:
+        port = "8000"
+    elif "auth" in endpoint:
+        port = "8001"
+    elif "github" in endpoint:
+        port = "8002"
+    elif "gitlab" in endpoint:
+        port = "8003"
+    elif "stats" in endpoint:
+        port = "8004"
+    else:
+        port = "8000"
+    return f"http://127.0.0.1:{port}{endpoint}"

@@ -28,7 +28,8 @@ if __name__ == "__main__":
                 kwargs={
                     "host": "127.0.0.1",
                     "port": SERVICE_PORTS[Service.AUTH],
-                    "log_level": "info"
+                    "env_file": ".env",
+                    "log_level": "info",
                 }),
         Process(target=uvicorn.run,
                 args=("main_microservices:stats_app", ),
