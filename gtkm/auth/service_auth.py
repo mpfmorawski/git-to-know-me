@@ -39,7 +39,9 @@ async def logout(response: Response, session_id: uuid.UUID = Depends(cookie)):
 @auth.get("/api/auth/github/authorize")
 async def authorize_github():
     response = RedirectResponse(
-        url=f"http://github.com/login/oauth/authorize?client_id={os.environ.get('CLIENT_ID')}")
+        url=
+        f"http://github.com/login/oauth/authorize?client_id={os.environ.get('CLIENT_ID')}"
+    )
     return response
 
 
