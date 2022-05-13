@@ -6,4 +6,3 @@ sqlalchemy
 StrEnum
 fastapi-sessions
 httpx
-psycopg2
