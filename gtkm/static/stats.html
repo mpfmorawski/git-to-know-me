@@ -9,6 +9,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="lang_chart.js"></script>
     <link rel="stylesheet" href="style.css"/>
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
   </head>
@@ -55,7 +57,9 @@
           <div class="generic chart">
             <h3>Top programming languages</h3>
             <div class="chart-panel">
-              <div class= "chart-itself" id="lang-chart">Chart</div>
+              <div class= "chart-itself">
+                <canvas id="lang-chart"></canvas>
+              </div>
               <div class="chart-legend"> Legend</div>
             </div>
           </div>

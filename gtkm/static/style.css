@@ -405,12 +405,15 @@ color: #FFFFFF;
   margin: 10px;
   
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .content .chart .chart-itself{
   position: relative;
   margin: 10px;
+  width: 300px;
+  height: 300px;
 }
 
 .content .chart .chart-legend{
