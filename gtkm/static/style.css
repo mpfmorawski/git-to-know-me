@@ -416,7 +416,7 @@ color: #FFFFFF;
   height: 300px;
 }
 
-.content .chart .chart-legend{
+.content .chart .chart-legendbox{
   position: relative;
   margin-left: 30px;
   margin-top: 10px;
@@ -428,6 +428,10 @@ color: #FFFFFF;
   font-weight: 400;
   font-size: 24px;
   line-height: 29px;
+}
+
+.content .chart .chart-legendbox ul{
+  list-style: none;
 }
 
 header .profile-picture{
