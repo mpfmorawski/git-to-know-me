@@ -5,7 +5,7 @@ let githubUserData = {
 };
 
 const fetchUserData = function (dataObject) {
-    fetch(`/github/stats/general_user`)
+    fetch(`/api/stats/general_user`)
       .then((response) => {
         if (!response.ok){
           throw new Error('HTTP response NOT OK');

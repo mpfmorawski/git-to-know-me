@@ -1,22 +1,11 @@
 from ...common import gen_url, get_endpoint_data
+from .config_class import ConfigBase
 
 import json
 import os
 
 
-class FetcherBase:
-    config = []
-
-    def __init__(self, path: str = None) -> None:
-        if path is not None:
-            with open(path) as json_file:
-                self.config = json.load(json_file)
-        else:
-            # TODO: Add error expectation handler
-            pass
-
-
-class GithubFetchBasicData(FetcherBase):
+class GithubFetchBasicData(ConfigBase):
 
     # Fetcher config class
     CONFIG_DIR = os.path.dirname(__file__) + "/config"
@@ -52,6 +41,7 @@ class GithubFetchBasicData(FetcherBase):
                                                         user_id.json()["id"]),
                                                 cookie=self.gtkm_cookie)
 
+        # TODO: potentially error when user_name doesn't exist 
         return user_name.json()["github_login"]
 
     # USER BASIC INFO
@@ -111,7 +101,7 @@ class GithubFetchBasicData(FetcherBase):
         self.user_data_json_file['forks_count'] = forks_count
 
 
-class GithubFetchLanguageData(FetcherBase):
+class GithubFetchLanguageData(ConfigBase):
 
     # Fetcher config class
     CONFIG_DIR = os.path.dirname(__file__) + "/config"
