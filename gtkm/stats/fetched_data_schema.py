@@ -10,6 +10,7 @@ class BasicUserData(BaseModel):
     repos_count: int
     forks_count: int
 
+
 class RepositoryStats(BaseModel):
     repo_owner: str
     repository_name: str
@@ -18,6 +19,4 @@ class RepositoryStats(BaseModel):
     forks_count: int
     watchers_count: int
     contributors_count: int
-    last_user_commit: int # ??
-
-
+    last_user_commit: int  # ??
