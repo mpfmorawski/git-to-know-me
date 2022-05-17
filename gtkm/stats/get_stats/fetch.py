@@ -41,7 +41,7 @@ class GithubFetchBasicData(ConfigBase):
                                                         user_id.json()["id"]),
                                                 cookie=self.gtkm_cookie)
 
-        # TODO: potentially error when user_name doesn't exist 
+        # TODO: potentially error when user_name doesn't exist
         return user_name.json()["github_login"]
 
     # USER BASIC INFO

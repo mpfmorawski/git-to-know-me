@@ -10,9 +10,9 @@ from typing import Optional
 stats = APIRouter()
 
 
-@stats.get("/api/stats/general_user")#, response_model=BasicUserData)
+@stats.get("/api/stats/general_user")  #, response_model=BasicUserData)
 async def get_general_stats(gtkm_cookie: Optional[str] = Cookie(
-        None)) -> JSONResponse:
+    None)) -> JSONResponse:
     '''
     FOR MVP purpose. Simplified data aggregator; aggregate only Github data.
     '''
