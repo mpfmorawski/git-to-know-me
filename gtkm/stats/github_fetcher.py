@@ -30,7 +30,9 @@ async def get_languages_stats_github(gtkm_cookie: Optional[str] = Cookie(
 
     github_fetcher = GithubFetchLanguageData(gtkm_cookie)
 
-    return {"TEST": "TEST"} #JSONResponse(await github_fetcher.execute_parsing())
+    return {
+        "TEST": "TEST"
+    }  #JSONResponse(await github_fetcher.execute_parsing())
 
 
 @github_fetcher.get("/github/stats/top_repos", response_model=BasicUserData)
@@ -40,4 +42,6 @@ async def get_repos_stats_github(gtkm_cookie: Optional[str] = Cookie(
     User is identify by cookie file.
     '''
 
-    return {"TEST": "TEST"} #JSONResponse(await github_fetcher.execute_parsing())
+    return {
+        "TEST": "TEST"
+    }  #JSONResponse(await github_fetcher.execute_parsing())
