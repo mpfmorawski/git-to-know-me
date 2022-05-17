@@ -316,6 +316,17 @@ color: #FFFFFF;
   color: #FFFFFF;
 }
 
+.content .repo-list{
+  height: 460px;
+  grid-column: 3 /span 3;
+
+  min-width: fit-content;
+  display: flex;
+  flex-direction: column;
+
+  color: #FFFFFF;
+}
+
 @media (max-width: 800px){
   .content .stats-grid{
     grid-template-columns: 1fr;
@@ -432,6 +443,146 @@ color: #FFFFFF;
 
 .content .chart .chart-legendbox ul{
   list-style: none;
+}
+
+.content .repo-list .repo-header{
+  display: flex;
+  justify-content: space-between;
+}
+
+.content .repo-list .repo-sorttype{
+  margin: 10px;
+  
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+
+  white-space: nowrap;
+}
+
+.content .repo-list .repo-panel{
+  height: 375px;
+  margin: 10px;
+
+  overflow-y: scroll;
+}
+
+.content .repo-list .repo-box{
+  position: relative;
+  height: 210px;
+  background: #494949;
+  border-radius: 10px;
+  padding: 10px;
+
+  display: flex;
+}
+
+.content .repo-list .repo-picture{
+  margin: 10px;
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  position: relative;
+  z-index: 0;
+  background: #595959;
+  border-radius: 50px;
+}
+
+.content .repo-list .repo-data{
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  height: fit-content;
+}
+
+.content .repo-list .repo-username{
+  position: relative;
+  margin: 10px;
+
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 32px;
+}
+
+.content .repo-list .repo-url{
+  position: relative;
+  margin-left: 0px;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 43px;
+  text-decoration-line: underline;
+
+  color: #FFFFFF;
+}
+
+.content .repo-list .repo-stats{
+  margin-left: 0px;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.content .repo-list .stats-slot{
+  margin-right: 30px;
+
+  display: flex;
+  align-items: center;
+}
+
+.content .repo-list .stats-logo{
+  height: 36px;
+  margin-right: 10px;
+}
+
+.content .repo-list .stats-value{
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 43px;
+}
+
+.content .repo-list .sort-data{
+  position: relative;
+  top: 15px;
+  height: fit-content;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.content .repo-list .sort-title{
+  margin: 10px;
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.content .repo-list .sort-value{
+  margin: 10px;
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 38px;
+  text-align: center;
 }
 
 header .profile-picture{
