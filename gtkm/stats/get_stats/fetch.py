@@ -64,8 +64,6 @@ class GithubFetchBasicData(ConfigBase):
         self.user_data_json_file['avatar_url'] = JSON_basic_user_data.get(
             "avatar_url")
 
-        print(self.user_data_json_file)
-
     # Function manage JSON name filed
 
     def _extract_name(self, JSON_basic_user_data: json):
@@ -101,12 +99,37 @@ class GithubFetchBasicData(ConfigBase):
         self.user_data_json_file['forks_count'] = forks_count
 
 
-class GithubFetchLanguageData(ConfigBase):
+class GithubFetchRepositoryData(ConfigBase):
 
     # Fetcher config class
     CONFIG_DIR = os.path.dirname(__file__) + "/config"
     PATH = CONFIG_DIR + "/github_config.json"
 
+    repositires_data_json_file: json = {}
+
     def __init__(self, gtkm_cookie):
         self.gtkm_cookie = gtkm_cookie
         super().__init__(self.PATH)
+
+    async def execute_parsing(self):
+        user_name = await self._get_user_name()
+
+        for data_part in self.config["repos info"]:
+            parsing_data = getattr(self, "_get_" + data_part["function"])
+
+            status = await parsing_data(
+                self.URL_BASE + str(data_part["URL"]).format(user_name))
+
+        return self.user_data_json_file
+
+
+    async def _get_repos_data_info(self, URL: str = None) -> None:
+        users_repositories = await get_endpoint_data(URL)
+
+        JSON_basic_user_data = json.loads(users_repositories)
+
+        for repository in JSON_basic_user_data:
+
+        #self.repositires_data_json_file['repository_name']
+
+        pass

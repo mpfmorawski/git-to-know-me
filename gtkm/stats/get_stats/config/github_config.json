@@ -12,15 +12,15 @@
 
     "language info":[
         {
-            "URL": "TEST",
-            "function": "TEST"
+            "URL": "ETST2",
+            "function": "TEST2"
         }
     ],
     
     "repos info":[
         {
-            "URL": "ETST2",
-            "function": "TEST2"
+            "URL": "users/{}/repos",
+            "function": "repos_data_info"
         }
     ]
 }
