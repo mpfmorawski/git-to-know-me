@@ -2,7 +2,7 @@ from fastapi import APIRouter, Cookie
 from fastapi.responses import JSONResponse
 from typing import Optional
 
-from .get_stats.fetch import GithubFetchBasicData, GithubFetchRepositoryData#, GithubFetchLanguageData
+from .get_stats.fetch import GithubFetchBasicData, GithubFetchRepositoryData  #, GithubFetchLanguageData
 
 from ..stats.fetched_data_schema import BasicUserData, RepositoryStats
 
