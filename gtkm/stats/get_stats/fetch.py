@@ -127,34 +127,78 @@ class GithubFetchRepositoryData(ConfigBase):
 
     async def _get_repos_data_info(self, URL: str = None) -> None:
 
+        language_list_URL = "/repos/{}/{}/languages"
+        user_name = await self._get_user_name()
+
         users_repositories = await get_endpoint_data(URL)
 
         JSON_basic_user_data = json.loads(users_repositories)
 
-        temp = []
+        temp_final_json = []
 
         for repository in JSON_basic_user_data:
-            temp_file: json = {}
-            temp_file["repo_owner"] = repository.get("owner")["login"]
-            temp_file["repository_name"] = repository.get("name")
-            temp_file["repo_url"] = repository.get("html_url")
+            temp_json: json = {}
 
-            temp_file["stargaze_count"] = repository.get("stargazers_count")
-            temp_file["forks_count"] = repository.get("forks_count")
+            temp_json["repo_language_list"] = json.loads(await get_endpoint_data(self.URL_BASE+language_list_URL.format(user_name, repository.get("name"))))
+            temp_json["repo_language_list_user"] = json.loads(await get_endpoint_data(self.URL_BASE+language_list_URL.format(user_name, repository.get("name"))))
 
-            temp_file["watchers_count"] = repository.get("watchers_count")
+            temp_json["repo_owner"] = repository.get("owner")["login"]
+            temp_json["repository_name"] = repository.get("name")
+            temp_json["repo_url"] = repository.get("html_url")
 
-            temp_file["contributors_count"] = repository.get("watchers_count")
-            temp_file["watchers_count"] = repository.get("watchers_count")
+            temp_json["stargaze_count"] = repository.get("stargazers_count")
+            temp_json["forks_count"] = repository.get("forks_count")
+
+            temp_json["watchers_count"] = repository.get("watchers_count")
+
+            temp_json["contributors_count"] = repository.get("watchers_count")
+            temp_json["watchers_count"] = repository.get("watchers_count")
 
             # TODO: In MVP version those data aren't proper and hardcoded!
-            temp_file["contributors_count"] = 0
-            temp_file["last_user_commit"] = date.fromisoformat(
+            temp_json["contributors_count"] = 0
+            temp_json["last_user_commit"] = date.fromisoformat(
                 repository.get("updated_at")[0:10])
 
-            temp.append(temp_file)
+            temp_final_json.append(temp_json)
 
-        self.repositires_data_json_file = temp
+        self.repositires_data_json_file = temp_final_json
+
+    async def _get_user_name(self):
+        if self.gtkm_cookie:
+            user_id = await get_endpoint_data(gen_url('/auth/user/id'),
+                                              cookie=self.gtkm_cookie)
+
+            user_name = await get_endpoint_data(gen_url("/auth/user/?id=" +
+                                                        user_id.json()["id"]),
+                                                cookie=self.gtkm_cookie)
+
+        # TODO: potentially error when user_name doesn't exist
+        return user_name.json()["github_login"]
+
+
+class GithubFetchLanguageData(ConfigBase):
+    # Fetcher config class
+    CONFIG_DIR = os.path.dirname(__file__) + "/config"
+    PATH = CONFIG_DIR + "/github_config.json"
+
+    URL_BASE = "https://api.github.com"
+
+    repositires_data_json_file: json = {}
+
+    def __init__(self, gtkm_cookie):
+        self.gtkm_cookie = gtkm_cookie
+        super().__init__(self.PATH)
+
+    async def execute_parsing(self):
+        user_name = await self._get_user_name()
+
+        for data_part in self.config["repos info"]:
+            parsing_data = getattr(self, "_get_" + data_part["function"])
+
+            status = await parsing_data(
+                self.URL_BASE + str(data_part["URL"]).format(user_name))
+
+        return self.repositires_data_json_file
 
     async def _get_user_name(self):
         if self.gtkm_cookie:
