@@ -2,10 +2,8 @@ from fastapi import APIRouter, Cookie
 from fastapi.responses import JSONResponse
 from typing import Optional
 
-
 # , GithubFetchLanguageData
 from .get_stats.fetch import GithubFetchBasicData, GithubFetchRepositoryData
-
 
 from ..stats.fetched_data_schema import BasicUserData, RepositoryStats
 
@@ -14,7 +12,7 @@ github_fetcher = APIRouter()
 
 @github_fetcher.get("/github/stats/general_user", response_model=BasicUserData)
 async def get_general_stats_github(gtkm_cookie: Optional[str] = Cookie(
-        None)) -> JSONResponse:
+    None)) -> JSONResponse:
     '''
     User is identify by cookie file.
     '''
@@ -26,7 +24,7 @@ async def get_general_stats_github(gtkm_cookie: Optional[str] = Cookie(
 
 @github_fetcher.get("/github/stats/languages", response_model=BasicUserData)
 async def get_languages_stats_github(gtkm_cookie: Optional[str] = Cookie(
-        None)) -> JSONResponse:
+    None)) -> JSONResponse:
     '''
     User is identify by cookie file.
     '''
@@ -41,7 +39,7 @@ async def get_languages_stats_github(gtkm_cookie: Optional[str] = Cookie(
 
 @github_fetcher.get("/github/stats/top_repos")
 async def get_repos_stats_github(gtkm_cookie: Optional[str] = Cookie(
-        None)) -> JSONResponse:
+    None)) -> JSONResponse:
     '''
     User is identify by cookie file.
     '''
