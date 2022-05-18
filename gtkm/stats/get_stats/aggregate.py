@@ -19,6 +19,7 @@ class GithubAggregateBasicData():
 
         return general_user_data.json()
 
+
 class GithubAggregateTopRepos():
 
     gtkm_cookie = None
