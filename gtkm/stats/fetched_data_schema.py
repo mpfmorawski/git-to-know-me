@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+import datetime
 
 
 class BasicUserData(BaseModel):
@@ -19,4 +20,4 @@ class RepositoryStats(BaseModel):
     forks_count: int
     watchers_count: int
     contributors_count: int
-    last_user_commit: int  # ??
+    last_user_commit: datetime.date

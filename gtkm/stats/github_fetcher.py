@@ -45,6 +45,4 @@ async def get_repos_stats_github(gtkm_cookie: Optional[str] = Cookie(
 
     github_fetcher = GithubFetchRepositoryData(gtkm_cookie)
 
-    return {
-        "TEST": "TEST"
-    }  # JSONResponse(await github_fetcher.execute_parsing())
+    return JSONResponse(await github_fetcher.execute_parsing())

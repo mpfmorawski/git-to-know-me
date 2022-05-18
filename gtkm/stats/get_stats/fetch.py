@@ -1,5 +1,6 @@
 from ...common import gen_url, get_endpoint_data
 from .config_class import ConfigBase
+from datetime import date
 
 import json
 import os
@@ -105,7 +106,9 @@ class GithubFetchRepositoryData(ConfigBase):
     CONFIG_DIR = os.path.dirname(__file__) + "/config"
     PATH = CONFIG_DIR + "/github_config.json"
 
-    repositires_data_json_file: json = {}
+    URL_BASE = "https://api.github.com"
+
+    repositires_data_json_file = []#: json = {}
 
     def __init__(self, gtkm_cookie):
         self.gtkm_cookie = gtkm_cookie
@@ -120,16 +123,43 @@ class GithubFetchRepositoryData(ConfigBase):
             status = await parsing_data(
                 self.URL_BASE + str(data_part["URL"]).format(user_name))
 
-        return self.user_data_json_file
+        return self.repositires_data_json_file
 
 
     async def _get_repos_data_info(self, URL: str = None) -> None:
+
         users_repositories = await get_endpoint_data(URL)
 
         JSON_basic_user_data = json.loads(users_repositories)
 
         for repository in JSON_basic_user_data:
+            temp_file: json = {}
+            temp_file["repo_owner"] = repository.get("owner")["login"]
+            temp_file["repository_name"] = repository.get("name")
+            temp_file["repo_url"] = repository.get("html_url")
 
-        #self.repositires_data_json_file['repository_name']
+            temp_file["stargaze_count"] = repository.get("stargazers_count")
+            temp_file["forks_count"] = repository.get("forks_count")
 
-        pass
+            temp_file["watchers_count"] = repository.get("watchers_count")
+
+            temp_file["contributors_count"] = repository.get("watchers_count")
+            temp_file["watchers_count"] = repository.get("watchers_count")
+
+            # TODO: In MVP version those data aren't proper and hardcoded!
+            temp_file["contributors_count"] = 0
+            temp_file["last_user_commit"] = date.fromisoformat(repository.get("updated_at")[0:10]) 
+
+            self.repositires_data_json_file.append(temp_file)
+
+    async def _get_user_name(self):
+        if self.gtkm_cookie:
+            user_id = await get_endpoint_data(gen_url('/auth/user/id'),
+                                              cookie=self.gtkm_cookie)
+
+            user_name = await get_endpoint_data(gen_url("/auth/user/?id=" +
+                                                        user_id.json()["id"]),
+                                                cookie=self.gtkm_cookie)
+
+        # TODO: potentially error when user_name doesn't exist
+        return user_name.json()["github_login"]

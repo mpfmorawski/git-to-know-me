@@ -19,7 +19,7 @@
     
     "repos info":[
         {
-            "URL": "users/{}/repos",
+            "URL": "/users/{}/repos",
             "function": "repos_data_info"
         }
     ]
