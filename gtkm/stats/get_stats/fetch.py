@@ -151,13 +151,8 @@ class GithubFetchRepositoryData(ConfigBase):
             temp_json["repo_owner"] = repository.get("owner")["login"]
             temp_json["repository_name"] = repository.get("name")
             temp_json["repo_url"] = repository.get("html_url")
-
             temp_json["stargaze_count"] = repository.get("stargazers_count")
             temp_json["forks_count"] = repository.get("forks_count")
-
-            temp_json["watchers_count"] = repository.get("watchers_count")
-
-            temp_json["contributors_count"] = repository.get("watchers_count")
             temp_json["watchers_count"] = repository.get("watchers_count")
 
             # TODO: In MVP version those data aren't proper and hardcoded!
