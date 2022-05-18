@@ -2,6 +2,10 @@ let githubUserData = {
   githubName: "Name",
   githubSurname: "Surname",
   githubUsername: "namesurname",
+  githubAvatar: "",
+  githubRepoCount: 0,
+  githubStarCount: 0,
+  githubForkCount: 0
 };
 
 const fetchUserData = function (dataObject) {
@@ -20,6 +24,9 @@ const fetchUserData = function (dataObject) {
           dataObject.githubName = data.name;
           dataObject.githubSurname = data.surname;
           dataObject.githubUsername = data.user_name;
+          dataObject.githubRepoCount = data.repos_count;
+          dataObject.githubStarCount = data.stargaze_count;
+          dataObject.githubForkCount = data.forks_count;
 
           let nameLabelList = document.querySelectorAll(".profile-name");
           let usernameLabelList = document.querySelectorAll(".profile-username");
@@ -31,6 +38,10 @@ const fetchUserData = function (dataObject) {
           for (const element of usernameLabelList){
               element.textContent = dataObject.githubUsername;
           }
+
+          document.getElementById("repo-count").textContent = dataObject.githubRepoCount;
+          document.getElementById("star-count").textContent = dataObject.githubStarCount;
+          document.getElementById("fork-count").textContent = dataObject.githubForkCount;
         } 
       })
       .catch(error => {
