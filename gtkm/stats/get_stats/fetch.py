@@ -108,7 +108,7 @@ class GithubFetchRepositoryData(ConfigBase):
 
     URL_BASE = "https://api.github.com"
 
-    repositires_data_json_file = []#: json = {}
+    repositires_data_json_file = []  #: json = {}
 
     def __init__(self, gtkm_cookie):
         self.gtkm_cookie = gtkm_cookie
@@ -124,7 +124,6 @@ class GithubFetchRepositoryData(ConfigBase):
                 self.URL_BASE + str(data_part["URL"]).format(user_name))
 
         return self.repositires_data_json_file
-
 
     async def _get_repos_data_info(self, URL: str = None) -> None:
 
@@ -148,7 +147,8 @@ class GithubFetchRepositoryData(ConfigBase):
 
             # TODO: In MVP version those data aren't proper and hardcoded!
             temp_file["contributors_count"] = 0
-            temp_file["last_user_commit"] = date.fromisoformat(repository.get("updated_at")[0:10]) 
+            temp_file["last_user_commit"] = date.fromisoformat(
+                repository.get("updated_at")[0:10])
 
             self.repositires_data_json_file.append(temp_file)
 
