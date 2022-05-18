@@ -108,7 +108,7 @@ class GithubFetchRepositoryData(ConfigBase):
 
     URL_BASE = "https://api.github.com"
 
-    repositires_data_json_file = []  #: json = {}
+    repositires_data_json_file: json = {}
 
     def __init__(self, gtkm_cookie):
         self.gtkm_cookie = gtkm_cookie
@@ -131,6 +131,8 @@ class GithubFetchRepositoryData(ConfigBase):
 
         JSON_basic_user_data = json.loads(users_repositories)
 
+        temp = []
+
         for repository in JSON_basic_user_data:
             temp_file: json = {}
             temp_file["repo_owner"] = repository.get("owner")["login"]
@@ -150,7 +152,9 @@ class GithubFetchRepositoryData(ConfigBase):
             temp_file["last_user_commit"] = date.fromisoformat(
                 repository.get("updated_at")[0:10])
 
-            self.repositires_data_json_file.append(temp_file)
+            temp.append(temp_file)
+
+        self.repositires_data_json_file = temp
 
     async def _get_user_name(self):
         if self.gtkm_cookie:
