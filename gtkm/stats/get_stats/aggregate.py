@@ -1,5 +1,4 @@
 from .aggregation_base_class import AggregationBaseClass
-
 """ Set of classes for data aggregation purpose; in future work, classes will be extended with new functionalities (e.g. downloading data from gitlab) """
 
 
