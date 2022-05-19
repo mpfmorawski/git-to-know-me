@@ -12,8 +12,8 @@
 
     "language info":[
         {
-            "URL": "ETST2",
-            "function": "TEST2"
+            "URL": "/users/{}/repos",
+            "function": "repos_data_language"
         }
     ],
     

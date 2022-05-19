@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from typing import Optional
 
 # , GithubFetchLanguageData
-from .get_stats.fetch import GithubFetchBasicData, GithubFetchRepositoryData
+from .get_stats.fetch import GithubFetchBasicData, GithubFetchRepositoryData, GithubFetchLanguageData
 
 from ..stats.fetched_data_schema import BasicUserData, RepositoryStats
 
@@ -22,14 +22,18 @@ async def get_general_stats_github(gtkm_cookie: Optional[str] = Cookie(
     return JSONResponse(await github_fetcher.execute_parsing())
 
 
-@github_fetcher.get("/github/stats/languages", response_model=BasicUserData)
+@github_fetcher.get("/github/stats/languages")#, response_model=BasicUserData)
 async def get_languages_stats_github(gtkm_cookie: Optional[str] = Cookie(
     None)) -> JSONResponse:
     '''
     User is identify by cookie file.
     '''
 
-    #github_fetcher = GithubFetchLanguageData(gtkm_cookie)
+    github_fetcher = GithubFetchLanguageData(gtkm_cookie)
+
+    aa = await github_fetcher.execute_parsing()
+
+    print(f"Return!!!!!!!!!!!!!:{aa}")
 
     return {
         "TEST": "TEST"

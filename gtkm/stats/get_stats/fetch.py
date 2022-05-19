@@ -184,7 +184,7 @@ class GithubFetchLanguageData(ConfigBase):
 
     URL_BASE = "https://api.github.com"
 
-    repositires_data_json_file: json = {}
+    repositires_language_data_json_file: json = {}
 
     def __init__(self, gtkm_cookie):
         self.gtkm_cookie = gtkm_cookie
@@ -193,13 +193,47 @@ class GithubFetchLanguageData(ConfigBase):
     async def execute_parsing(self):
         user_name = await self._get_user_name()
 
-        for data_part in self.config["repos info"]:
+        for data_part in self.config["language info"]:
             parsing_data = getattr(self, "_get_" + data_part["function"])
 
             status = await parsing_data(
                 self.URL_BASE + str(data_part["URL"]).format(user_name))
 
-        return self.repositires_data_json_file
+        return self.repositires_language_data_json_file
+
+    async def _get_repos_data_language(self, URL: str = None) -> None:
+        language_list_URL = "/repos/{}/{}/languages"
+        user_name = await self._get_user_name()
+
+        users_repositories = await get_endpoint_data(URL)
+
+        JSON_basic_user_data = json.loads(users_repositories)
+
+        temp_final_json = []
+
+        for repository in JSON_basic_user_data:
+            temp_json: json = {}
+
+            repo_language = json.loads(
+                await
+                get_endpoint_data(self.URL_BASE + language_list_URL.format(
+                    user_name, repository.get("name"))))
+
+            temporary_byte_sum = 0
+            temporary_json_data_file = []
+
+            for rep in repo_language:
+                temporary_byte_sum = temporary_byte_sum + \
+                    repo_language.get(rep)
+
+            for rep in repo_language:
+                json_obj: json = {}
+                json_obj = {f"{rep}": f"{repo_language.get(rep)}"}
+                temporary_json_data_file.append(json_obj)
+
+            temp_final_json.append(temporary_json_data_file)
+
+        self.repositires_language_data_json_file = temp_final_json
 
     async def _get_user_name(self):
         if self.gtkm_cookie:
