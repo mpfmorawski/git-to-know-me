@@ -219,7 +219,8 @@ class GithubFetchLanguageData(ConfigBase):
                 language_list_URL.format(user_name, repository.get("name"))))
 
             temporary_byte_sum = 0
-            temporary_json_data_file = []
+            temporary_json_data_file_languages = []
+            temporary_json_data_file: json={}
 
             for rep in repo_language:
                 temporary_byte_sum = temporary_byte_sum + \
@@ -227,8 +228,12 @@ class GithubFetchLanguageData(ConfigBase):
 
             for rep in repo_language:
                 json_obj: json = {}
-                json_obj = {f"{rep}": f"{repo_language.get(rep)}"}
-                temporary_json_data_file.append(json_obj)
+                json_obj = {
+                    f"{rep}": f"{float(repo_language.get(rep)/temporary_byte_sum)}"}
+                temporary_json_data_file_languages.append(json_obj)
+
+            temporary_json_data_file["repo_name"] = repository.get("name")
+            temporary_json_data_file["repo_languages"] = temporary_json_data_file_languages
 
             temp_final_json.append(temporary_json_data_file)
 
