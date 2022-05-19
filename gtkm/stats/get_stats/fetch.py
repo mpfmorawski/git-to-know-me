@@ -7,26 +7,22 @@ import json
 
 class GithubFetchBasicData(FetcherBase):
 
-    user_data_json_file: json = {}
-
-    gtkm_cookie = None
-
     def __init__(self, gtkm_cookie):
         self.gtkm_cookie = gtkm_cookie
         super().__init__(self.PATH)
 
     async def execute_parsing(self):
-        user_name = await self._get_user_name()
 
         for data_part in self.config["basic info"]:
             parsing_data = getattr(self, "_get_" + data_part["function"])
 
+            # TODO: Check status variable; now is unused!
             status = await parsing_data(
-                self.URL_BASE + str(data_part["URL"]).format(user_name))
+                self.URL_BASE + str(data_part["URL"]).format(await self._get_user_name()))
 
-        return self.user_data_json_file
+        return self.json_file_to_return
 
-    # USER BASIC INFO
+    # User basic info
 
     async def _get_basic_user_data(self, URL: str = None) -> None:
         basic_user_data = await get_endpoint_data(URL)
@@ -40,11 +36,11 @@ class GithubFetchBasicData(FetcherBase):
         user_name, user_surname = self._extract_name(
             json.loads(basic_user_data))
 
-        self.user_data_json_file['name'] = user_name
-        self.user_data_json_file['surname'] = user_surname
-        self.user_data_json_file['user_name'] = JSON_basic_user_data.get(
+        self.json_file_to_return['name'] = user_name
+        self.json_file_to_return['surname'] = user_surname
+        self.json_file_to_return['user_name'] = JSON_basic_user_data.get(
             "login")
-        self.user_data_json_file['avatar_url'] = JSON_basic_user_data.get(
+        self.json_file_to_return['avatar_url'] = JSON_basic_user_data.get(
             "avatar_url")
 
     # Function manage JSON name filed
@@ -77,15 +73,12 @@ class GithubFetchBasicData(FetcherBase):
             stargaze_count = stargaze_count + element.get("stargazers_count")
             forks_count = forks_count + element.get("forks_count")
 
-        self.user_data_json_file['stargaze_count'] = stargaze_count
-        self.user_data_json_file['repos_count'] = len(JSON_repos_info)
-        self.user_data_json_file['forks_count'] = forks_count
+        self.json_file_to_return['stargaze_count'] = stargaze_count
+        self.json_file_to_return['repos_count'] = len(JSON_repos_info)
+        self.json_file_to_return['forks_count'] = forks_count
 
 
 class GithubFetchRepositoryData(FetcherBase):
-
-    repositires_data_json_file: json = {}
-
     def __init__(self, gtkm_cookie):
         self.gtkm_cookie = gtkm_cookie
         super().__init__(self.PATH)
@@ -99,7 +92,7 @@ class GithubFetchRepositoryData(FetcherBase):
             status = await parsing_data(
                 self.URL_BASE + str(data_part["URL"]).format(user_name))
 
-        return self.repositires_data_json_file
+        return self.json_file_to_return
 
     async def _get_repos_data_info(self, URL: str = None) -> None:
 
@@ -126,12 +119,10 @@ class GithubFetchRepositoryData(FetcherBase):
 
             temp_final_json.append(temp_json)
 
-        self.repositires_data_json_file = temp_final_json
+        self.json_file_to_return = temp_final_json
 
 
 class GithubFetchLanguageData(FetcherBase):
-
-    repositires_language_data_json_file: json = {}
 
     def __init__(self, gtkm_cookie):
         self.gtkm_cookie = gtkm_cookie
@@ -146,7 +137,7 @@ class GithubFetchLanguageData(FetcherBase):
             status = await parsing_data(
                 self.URL_BASE + str(data_part["URL"]).format(user_name))
 
-        return self.repositires_language_data_json_file
+        return self.json_file_to_return
 
     async def _get_repos_data_language(self, URL: str = None) -> None:
         language_list_URL = "/repos/{}/{}/languages"
@@ -159,7 +150,6 @@ class GithubFetchLanguageData(FetcherBase):
         temp_final_json = []
 
         for repository in JSON_basic_user_data:
-            temp_json: json = {}
 
             repo_language = json.loads(await get_endpoint_data(
                 self.URL_BASE +
@@ -187,4 +177,4 @@ class GithubFetchLanguageData(FetcherBase):
 
             temp_final_json.append(temporary_json_data_file)
 
-        self.repositires_language_data_json_file = temp_final_json
+        self.json_file_to_return = temp_final_json

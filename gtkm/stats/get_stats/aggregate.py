@@ -1,49 +1,43 @@
-from ...common import gen_url, get_endpoint_data
+from .aggregation_base_class import AggregationBaseClass
 
 
-class GithubAggregateBasicData():
-
-    gtkm_cookie = None
+class GithubAggregateBasicData(AggregationBaseClass):
 
     def __init__(self, gtkm_cookie):
         self.gtkm_cookie = gtkm_cookie
+        super().__init__()
 
     async def execute_collecting(self):
 
-        if self.gtkm_cookie:
-            general_user_data = await get_endpoint_data(
-                gen_url('/github/stats/general_user'), cookie=self.gtkm_cookie)
+        github_general_user_data = await self._execute_collecting_data(
+            '/github/stats/general_user')
 
-        return general_user_data.json()
+        return github_general_user_data
 
 
-class GithubAggregateLanguageData():
-
-    gtkm_cookie = None
+class GithubAggregateLanguageData(AggregationBaseClass):
 
     def __init__(self, gtkm_cookie):
         self.gtkm_cookie = gtkm_cookie
+        super().__init__()
 
     async def execute_collecting(self):
 
-        if self.gtkm_cookie:
-            general_user_data = await get_endpoint_data(
-                gen_url('/github/stats/languages'), cookie=self.gtkm_cookie)
+        github_languages_data = await self._execute_collecting_data(
+            '/github/stats/languages')
 
-        return general_user_data.json()
+        return github_languages_data
 
 
-class GithubAggregateTopRepos():
-
-    gtkm_cookie = None
+class GithubAggregateTopRepos(AggregationBaseClass):
 
     def __init__(self, gtkm_cookie):
         self.gtkm_cookie = gtkm_cookie
+        super().__init__()
 
     async def execute_collecting(self):
 
-        if self.gtkm_cookie:
-            general_user_data = await get_endpoint_data(
-                gen_url('/github/stats/top_repos'), cookie=self.gtkm_cookie)
+        github_top_repos_data = await self._execute_collecting_data(
+            '/github/stats/top_repos')
 
-        return general_user_data.json()
+        return github_top_repos_data

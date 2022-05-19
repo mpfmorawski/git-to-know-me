@@ -3,13 +3,17 @@ from ...common import gen_url, get_endpoint_data
 import json
 import os
 
-
+""" Base class for main fetch classes"""
 class FetcherBase:
     # Fetcher config class
     CONFIG_DIR = os.path.dirname(__file__) + "/config"
     PATH = CONFIG_DIR + "/github_config.json"
 
     URL_BASE = "https://api.github.com"
+
+    gtkm_cookie = None
+
+    json_file_to_return: json = {}
 
     config = []
 
@@ -20,17 +24,6 @@ class FetcherBase:
         else:
             # TODO: Add error expectation handler
             pass
-
-    async def execute_parsing_test(self):
-        user_name = await self._get_user_name()
-
-        for data_part in self.config["basic info"]:
-            parsing_data = getattr(self, "_get_" + data_part["function"])
-
-            status = await parsing_data(
-                self.URL_BASE + str(data_part["URL"]).format(user_name))
-
-        return self.user_data_json_file
 
     async def _get_user_name(self):
         if self.gtkm_cookie:
