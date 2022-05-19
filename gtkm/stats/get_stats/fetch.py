@@ -4,6 +4,7 @@ from datetime import date
 
 import json
 
+""" Set of classes for data fetching purpose """
 
 class GithubFetchBasicData(FetcherBase):
 
@@ -11,7 +12,9 @@ class GithubFetchBasicData(FetcherBase):
         self.gtkm_cookie = gtkm_cookie
         super().__init__(self.PATH)
 
-    async def execute_parsing(self):
+
+    async def execute_parsing(self) -> str:
+
 
         for data_part in self.config["basic info"]:
             parsing_data = getattr(self, "_get_" + data_part["function"])
@@ -20,6 +23,7 @@ class GithubFetchBasicData(FetcherBase):
             status = await parsing_data(
                 self.URL_BASE +
                 str(data_part["URL"]).format(await self._get_user_name()))
+
 
         return self.json_file_to_return
 
@@ -85,7 +89,7 @@ class GithubFetchRepositoryData(FetcherBase):
         self.gtkm_cookie = gtkm_cookie
         super().__init__(self.PATH)
 
-    async def execute_parsing(self):
+    async def execute_parsing(self) -> str:
         user_name = await self._get_user_name()
 
         for data_part in self.config["repos info"]:
@@ -130,7 +134,7 @@ class GithubFetchLanguageData(FetcherBase):
         self.gtkm_cookie = gtkm_cookie
         super().__init__(self.PATH)
 
-    async def execute_parsing(self):
+    async def execute_parsing(self) -> str:
         user_name = await self._get_user_name()
 
         for data_part in self.config["language info"]:

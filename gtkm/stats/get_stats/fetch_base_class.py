@@ -26,7 +26,8 @@ class FetcherBase:
             # TODO: Add error expectation handler
             pass
 
-    async def _get_user_name(self):
+    async def _get_user_name(self) -> str:
+
         if self.gtkm_cookie:
             user_id = await get_endpoint_data(gen_url('/auth/user/id'),
                                               cookie=self.gtkm_cookie)

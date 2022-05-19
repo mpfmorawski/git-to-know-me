@@ -8,7 +8,7 @@ class AggregationBaseClass():
     def __init__(self):
         pass
 
-    async def _execute_collecting_data(self, URL: str):
+    async def _execute_collecting_data(self, URL: str) -> str:
         if self.gtkm_cookie:
             particular_data = await get_endpoint_data(gen_url(URL),
                                                       cookie=self.gtkm_cookie)

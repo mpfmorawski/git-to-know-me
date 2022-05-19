@@ -36,7 +36,7 @@ async def get_languages_stats_github(gtkm_cookie: Optional[str] = Cookie(
     return JSONResponse(await github_fetcher.execute_parsing())
 
 
-# FIXME: Add working response_model
+# TODO: Add working response_model
 @github_fetcher.get("/github/stats/top_repos")
 async def get_repos_stats_github(gtkm_cookie: Optional[str] = Cookie(
     None)) -> JSONResponse:
