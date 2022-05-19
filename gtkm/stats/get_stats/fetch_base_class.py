@@ -10,7 +10,7 @@ class FetcherBase:
     PATH = CONFIG_DIR + "/github_config.json"
 
     URL_BASE = "https://api.github.com"
-    
+
     config = []
 
     def __init__(self, path: str = None) -> None:
