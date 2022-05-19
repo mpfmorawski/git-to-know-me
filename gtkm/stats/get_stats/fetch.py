@@ -106,7 +106,7 @@ class GithubFetchRepositoryData(FetcherBase):
         temp_final_json = []
 
         # TODO: Remove counter_MVP_ONLY and choose five best repos intelligently
-        counter_MVP_ONLY= 0
+        counter_MVP_ONLY = 0
 
         for repository in JSON_basic_user_data:
             temp_json: json = {}
@@ -161,7 +161,7 @@ class GithubFetchLanguageData(FetcherBase):
         temp_final_json = []
 
         # TODO: Remove counter_MVP_ONLY and choose five best repos intelligently
-        counter_MVP_ONLY= 0
+        counter_MVP_ONLY = 0
 
         for repository in JSON_basic_user_data:
 
@@ -195,6 +195,5 @@ class GithubFetchLanguageData(FetcherBase):
 
             if counter_MVP_ONLY >= 5:
                 break
-
 
         self.json_file_to_return = temp_final_json
