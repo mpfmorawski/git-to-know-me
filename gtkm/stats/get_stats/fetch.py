@@ -214,10 +214,9 @@ class GithubFetchLanguageData(ConfigBase):
         for repository in JSON_basic_user_data:
             temp_json: json = {}
 
-            repo_language = json.loads(
-                await
-                get_endpoint_data(self.URL_BASE + language_list_URL.format(
-                    user_name, repository.get("name"))))
+            repo_language = json.loads(await get_endpoint_data(
+                self.URL_BASE +
+                language_list_URL.format(user_name, repository.get("name"))))
 
             temporary_byte_sum = 0
             temporary_json_data_file = []

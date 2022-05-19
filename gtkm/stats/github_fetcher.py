@@ -22,7 +22,8 @@ async def get_general_stats_github(gtkm_cookie: Optional[str] = Cookie(
     return JSONResponse(await github_fetcher.execute_parsing())
 
 
-@github_fetcher.get("/github/stats/languages")#, response_model=BasicUserData)
+@github_fetcher.get("/github/stats/languages"
+                    )  #, response_model=BasicUserData)
 async def get_languages_stats_github(gtkm_cookie: Optional[str] = Cookie(
     None)) -> JSONResponse:
     '''

@@ -21,6 +21,7 @@ async def get_general_stats(gtkm_cookie: Optional[str] = Cookie(
 
     return JSONResponse(await github_aggregator.execute_collecting())
 
+
 @stats.get("/api/stats/languages")  #, response_model=BasicUserData)
 async def get_languages_stats(gtkm_cookie: Optional[str] = Cookie(
     None)) -> JSONResponse:
@@ -31,6 +32,7 @@ async def get_languages_stats(gtkm_cookie: Optional[str] = Cookie(
     github_aggregator = GithubAggregateLanguageData(gtkm_cookie)
 
     return JSONResponse(await github_aggregator.execute_collecting())
+
 
 @stats.get("/api/stats/top_repos")  #, response_model=BasicUserData)
 async def get_top_repos_stats(gtkm_cookie: Optional[str] = Cookie(
