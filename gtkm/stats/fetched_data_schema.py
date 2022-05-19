@@ -13,6 +13,11 @@ class BasicUserData(BaseModel):
     forks_count: int
 
 
+class RepositoryLanguages(BaseModel):
+    repo_name: str
+    repo_language: list
+
+
 class RepositoryStats(BaseModel):
     repo_language_list: list
     repo_language_list_user: list

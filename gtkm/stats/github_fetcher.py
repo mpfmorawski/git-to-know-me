@@ -5,7 +5,7 @@ from typing import Optional
 # , GithubFetchLanguageData
 from .get_stats.fetch import GithubFetchBasicData, GithubFetchRepositoryData, GithubFetchLanguageData
 
-from ..stats.fetched_data_schema import BasicUserData, RepositoryStats
+from ..stats.fetched_data_schema import BasicUserData, RepositoryLanguages, RepositoryStats
 
 github_fetcher = APIRouter()
 
@@ -23,7 +23,7 @@ async def get_general_stats_github(gtkm_cookie: Optional[str] = Cookie(
 
 
 @github_fetcher.get("/github/stats/languages"
-                    )  # , response_model=BasicUserData)
+                    )  # , response_model=RepositoryLanguages)
 async def get_languages_stats_github(gtkm_cookie: Optional[str] = Cookie(
     None)) -> JSONResponse:
     '''
