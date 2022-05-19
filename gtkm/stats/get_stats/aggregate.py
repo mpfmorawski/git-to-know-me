@@ -1,8 +1,5 @@
 from ...common import gen_url, get_endpoint_data
 
-import json
-import os
-
 
 class GithubAggregateBasicData():
 

@@ -5,7 +5,7 @@ Function accept cookie file if necessary.
 '''
 
 
-async def get_endpoint_data(URL: str, cookie=None):
+async def get_endpoint_data(URL: str, cookie=None) -> str:
     if cookie is None:
         async with httpx.AsyncClient() as client:
             response = await client.get(URL)
