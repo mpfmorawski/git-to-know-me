@@ -1,6 +1,5 @@
 from fastapi import APIRouter
 
-from ..stats.aggregate_data_schema import BasicUserData
 from .get_stats.aggregate import GithubAggregateBasicData, GithubAggregateLanguageData, GithubAggregateTopRepos
 
 from fastapi import APIRouter, Cookie

@@ -105,6 +105,9 @@ class GithubFetchRepositoryData(FetcherBase):
 
         temp_final_json = []
 
+        # TODO: Remove counter_MVP_ONLY and choose five best repos intelligently
+        counter_MVP_ONLY= 0
+
         for repository in JSON_basic_user_data:
             temp_json: json = {}
 
@@ -121,6 +124,11 @@ class GithubFetchRepositoryData(FetcherBase):
                 repository.get("updated_at")[0:10])
 
             temp_final_json.append(temp_json)
+
+            counter_MVP_ONLY = counter_MVP_ONLY + 1
+
+            if counter_MVP_ONLY >= 5:
+                break
 
         self.json_file_to_return = temp_final_json
 
@@ -152,6 +160,9 @@ class GithubFetchLanguageData(FetcherBase):
 
         temp_final_json = []
 
+        # TODO: Remove counter_MVP_ONLY and choose five best repos intelligently
+        counter_MVP_ONLY= 0
+
         for repository in JSON_basic_user_data:
 
             repo_language = json.loads(await get_endpoint_data(
@@ -179,5 +190,11 @@ class GithubFetchLanguageData(FetcherBase):
                 "repo_languages"] = temporary_json_data_file_languages
 
             temp_final_json.append(temporary_json_data_file)
+
+            counter_MVP_ONLY = counter_MVP_ONLY + 1
+
+            if counter_MVP_ONLY >= 5:
+                break
+
 
         self.json_file_to_return = temp_final_json
