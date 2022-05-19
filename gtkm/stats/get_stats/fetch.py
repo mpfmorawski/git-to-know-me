@@ -139,15 +139,6 @@ class GithubFetchRepositoryData(ConfigBase):
         for repository in JSON_basic_user_data:
             temp_json: json = {}
 
-            temp_json["repo_language_list"] = json.loads(
-                await
-                get_endpoint_data(self.URL_BASE + language_list_URL.format(
-                    user_name, repository.get("name"))))
-            temp_json["repo_language_list_user"] = json.loads(
-                await
-                get_endpoint_data(self.URL_BASE + language_list_URL.format(
-                    user_name, repository.get("name"))))
-
             temp_json["repo_owner"] = repository.get("owner")["login"]
             temp_json["repository_name"] = repository.get("name")
             temp_json["repo_url"] = repository.get("html_url")

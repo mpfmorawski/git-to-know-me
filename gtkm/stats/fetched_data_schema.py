@@ -19,8 +19,6 @@ class RepositoryLanguages(BaseModel):
 
 
 class RepositoryStats(BaseModel):
-    repo_language_list: list
-    repo_language_list_user: list
     repo_owner: str
     repository_name: str
     repo_url: str
