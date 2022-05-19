@@ -2,8 +2,9 @@ from ...common import gen_url, get_endpoint_data
 
 import json
 import os
-
 """ Base class for main fetch classes"""
+
+
 class FetcherBase:
     # Fetcher config class
     CONFIG_DIR = os.path.dirname(__file__) + "/config"

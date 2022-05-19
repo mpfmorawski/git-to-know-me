@@ -18,7 +18,8 @@ class GithubFetchBasicData(FetcherBase):
 
             # TODO: Check status variable; now is unused!
             status = await parsing_data(
-                self.URL_BASE + str(data_part["URL"]).format(await self._get_user_name()))
+                self.URL_BASE +
+                str(data_part["URL"]).format(await self._get_user_name()))
 
         return self.json_file_to_return
 
@@ -79,6 +80,7 @@ class GithubFetchBasicData(FetcherBase):
 
 
 class GithubFetchRepositoryData(FetcherBase):
+
     def __init__(self, gtkm_cookie):
         self.gtkm_cookie = gtkm_cookie
         super().__init__(self.PATH)
