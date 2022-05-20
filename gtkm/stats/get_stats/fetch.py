@@ -123,6 +123,8 @@ class GithubFetchRepositoryData(FetcherBase):
             temp_json["last_user_commit"] = date.fromisoformat(
                 repository.get("updated_at")[0:10])
 
+            temp_json["top_5_place"] = 0
+
             temp_final_json.append(temp_json)
 
             counter_MVP_ONLY = counter_MVP_ONLY + 1
@@ -130,7 +132,41 @@ class GithubFetchRepositoryData(FetcherBase):
             if counter_MVP_ONLY >= 5:
                 break
 
-        self.json_file_to_return = temp_final_json
+        final_json = self._put_proper_order(temp_final_json)
+
+        self.json_file_to_return = final_json
+
+    def _put_proper_order(self, json_file_RAW):
+        
+        json_file = json_file_RAW
+
+        temp_json = []
+
+        biggest_stargaze_count = 0
+
+        # start place value
+        place_counter = 1
+
+        while(len(json_file)>0):
+            biggest_stargaze_count = 0
+            temp_json_file_order = []
+            for index in range(len(json_file)):
+                if json_file[index].get("stargaze_count")>biggest_stargaze_count:
+                    temp_json_file_order = []
+                    temp_json_file_order.append(index)
+                    biggest_stargaze_count = json_file[index].get("stargaze_count")
+                    
+                elif json_file[index].get("stargaze_count") == biggest_stargaze_count:
+                    temp_json_file_order.append(index)
+                    
+
+            for index in temp_json_file_order:
+                json_file[index]["top_5_place"] = place_counter
+                temp_json.append(json_file[index])
+                place_counter= place_counter + 1
+                json_file.pop(index)
+
+        return temp_json
 
 
 class GithubFetchLanguageData(FetcherBase):

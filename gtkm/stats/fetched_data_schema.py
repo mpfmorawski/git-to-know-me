@@ -26,3 +26,4 @@ class RepositoryStats(BaseModel):
     watchers_count: int
     contributors_count: int
     last_user_commit: datetime.date
+    top_5_place: int
