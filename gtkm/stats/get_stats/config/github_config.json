@@ -1,0 +1,26 @@
+{
+    "basic info": [
+        {
+            "URL": "/users/{}",
+            "function": "basic_user_data"
+        },
+        {
+            "URL": "/users/{}/repos",
+            "function": "user_repos_info"
+        }
+    ],
+
+    "language info":[
+        {
+            "URL": "/users/{}/repos",
+            "function": "repos_data_language"
+        }
+    ],
+    
+    "repos info":[
+        {
+            "URL": "/users/{}/repos",
+            "function": "repos_data_info"
+        }
+    ]
+}
