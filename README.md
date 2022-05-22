@@ -3,6 +3,7 @@
 ## Setup
 
 Install dependencies
+
 ```bash
 pip3 install -r requirements.txt
 ```
@@ -11,12 +12,14 @@ pip3 install -r requirements.txt
 
 To run you need proper `.env` file with secret tokens
 
-### Monolith version:
+### Monolith version
+
 ```bash
 uvicorn gtkm.main:app --reload --env-file .env
 ```
 
-### Microservice version:
+### Microservice version
+
 - Install nginx (https://www.nginx.com/resources/wiki/start/topics/tutorials/install/)
 - Windows:
   - Place the unzipped nginx files in folder "nginx" in the main folder of the project
