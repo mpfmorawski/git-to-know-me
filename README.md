@@ -24,8 +24,9 @@ uvicorn gtkm.main:app --reload --env-file .env
   - Open cmd in the "nginx" folder
   - to start nginx: `start nginx`
 - Linux:
-  - nginx files are located in /usr/bin/nginx
-  - to start nginx: `/usr/bin/nginx -c <path_to_conf_file>`
+  - Open terminal in the "nginx" folder
+  - to start nginx: `sudo nginx -p ./ -c conf/nginx.conf`
 - additional nginx commands:
   - `nginx -s reload`
   - `nginx -s quit`
+- Run `main_microservices.py`
