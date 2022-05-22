@@ -1,4 +1,6 @@
+import re
 from strenum import StrEnum
+from fastapi.logger import logger
 
 
 class Service(StrEnum):
@@ -17,7 +19,28 @@ SERVICE_PORTS = {
     Service.STATS_AGGREGATOR: 8004
 }
 
+REGEX_API_TO_PORT = {
+    "(\/)?(api\/)?auth\/.*": SERVICE_PORTS[Service.AUTH],
+    "(\/)?(api\/)?github\/.*": SERVICE_PORTS[Service.GITHUB_FETCHER],
+    "(\/)?(api\/)?gitlab\/.*": SERVICE_PORTS[Service.GITLAB_FETCHER],
+    "(\/)?(api\/)?stats\/.*": SERVICE_PORTS[Service.STATS_AGGREGATOR],
+    ".*\.(html|js|css|png|svg|jpg|ttf)$": SERVICE_PORTS[Service.ENDPOINT],
+}
+
 
 def gen_url(endpoint: str) -> str:
     '''Generates full URL from selected API endpoint'''
-    return "http://127.0.0.1:8000" + endpoint
+    port = None
+    for pattern, p in REGEX_API_TO_PORT.items():
+        if re.fullmatch(pattern, endpoint) is not None:
+            port = p
+            break
+    if port is None:
+        port = SERVICE_PORTS[Service.ENDPOINT]
+        logger.warning(
+            f"Unknown endpoint: {endpoint}, reditecting to: http://127.0.0.1:{port}{endpoint}"
+        )
+    return f"http://127.0.0.1:{port}{endpoint}"
+
+
+#TODO handle single service routing
