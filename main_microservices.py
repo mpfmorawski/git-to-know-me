@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-
+import os
 import uvicorn
 
 from multiprocessing import Process
 
 from fastapi import FastAPI
+
+os.environ["MULTISERVICE_DEPLOYMENT"] = "1"
 
 from gtkm.auth.service_auth import auth
 from gtkm.stats.stats_aggregator import stats
