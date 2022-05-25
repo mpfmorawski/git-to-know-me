@@ -46,6 +46,14 @@ sudo chmod +x /usr/local/bin/docker-compose
 sudo docker–compose --version
 ```
 
+### Minimikube installation
+
+Based on: https://minikube.sigs.k8s.io/docs/start/
+```bash
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+```
+
 ## Run
 
 To run you need proper `.env` file with secret tokens
