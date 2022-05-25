@@ -8,6 +8,44 @@ Install dependencies
 pip3 install -r requirements.txt
 ```
 
+## Docker installation
+
+Based ond: https://www.simplilearn.com/tutorials/docker-tutorial/how-to-install-docker-on-ubuntu
+1. Install Docker using the following command:
+```bash
+sudo apt install docker.io
+```
+2. Install all the dependency packages using the following command:
+```bash
+sudo snap install docker
+```
+
+## Docker-compose installation
+
+Based on: https://phoenixnap.com/kb/install-docker-compose-on-ubuntu-20-04
+1. Upgrade and Update:
+```bash
+sudo apt update
+sudo apt upgrade
+```
+2. Install curl:
+```bash
+sudo apt install curl
+```
+3. Download the Latest Docker-compose Version
+```bash
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker
+-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+```
+4. Change File Permission:
+```bash
+sudo chmod +x /usr/local/bin/docker-compose
+```
+5. Check Docker Compose Version:
+```bash
+sudo docker–compose --version
+```
+
 ## Run
 
 To run you need proper `.env` file with secret tokens
