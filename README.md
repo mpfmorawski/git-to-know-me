@@ -46,7 +46,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 sudo docker–compose --version
 ```
 
-### Minimikube installation
+### Minikube installation
 
 Based on: https://minikube.sigs.k8s.io/docs/start/
 ```bash
