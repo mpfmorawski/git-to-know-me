@@ -4,8 +4,8 @@ let githubUserData = {
   githubUsername: "namesurname",
 };
 
-const getUserData = function (userName, dataObject) {
-    fetch(`/github/stats/general_user`)
+const fetchUserData = function (dataObject) {
+    fetch(`/api/stats/general_user`)
       .then((response) => {
         if (!response.ok){
           throw new Error('HTTP response NOT OK');
@@ -38,8 +38,7 @@ const getUserData = function (userName, dataObject) {
       });
   };
   
-const user = `kamilwil`;
-getUserData(user, githubUserData);
+fetchUserData(githubUserData);
 
 
 

@@ -14,9 +14,6 @@ from .sessions.session_data import SessionData
 Base.metadata.create_all(bind=engine)
 auth = APIRouter()
 
-CLIENT_ID = os.environ.get('CLIENT_ID')
-CLIENT_SECRET = os.environ.get('CLIENT_SECRET')
-
 
 # Endpoint for obtaining user data based on the user ID
 @auth.get("/auth/user/", response_model=User)
@@ -42,7 +39,9 @@ async def logout(response: Response, session_id: uuid.UUID = Depends(cookie)):
 @auth.get("/api/auth/github/authorize")
 async def authorize_github():
     response = RedirectResponse(
-        url=f"http://github.com/login/oauth/authorize?client_id={CLIENT_ID}")
+        url=
+        f"http://github.com/login/oauth/authorize?client_id={os.environ.get('CLIENT_ID')}"
+    )
     return response
 
 
@@ -52,8 +51,8 @@ async def github_authorized(code: str, db: Session = Depends(get_db)):
     # Request exchanging the temporary code for the access token
     headers = {"Accept": "application/json"}
     params = {
-        "client_id": CLIENT_ID,
-        "client_secret": CLIENT_SECRET,
+        "client_id": os.environ.get('CLIENT_ID'),
+        "client_secret": os.environ.get('CLIENT_SECRET'),
         "code": code
     }
     token_request = requests.post("http://github.com/login/oauth/access_token",
