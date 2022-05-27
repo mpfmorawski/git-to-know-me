@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.9-slim-buster
 WORKDIR /gtkm
 COPY requirements.txt /gtkm/
 RUN pip3 install -r requirements.txt
