@@ -71,6 +71,12 @@ docker-compose build
 docker-compose up
 ```
 
+### Kubernetes
+```bash
+minikube start
+kubectl apply -f web-service.yaml,web-deployment.yaml,web-claim0-persistentvolumeclaim.yaml,db-service.yaml,db-deployment.yaml
+```
+
 ### Microservice version
 
 - Install nginx (https://www.nginx.com/resources/wiki/start/topics/tutorials/install/)
