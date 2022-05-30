@@ -8,6 +8,13 @@ let githubUserData = {
   githubForkCount: 0
 };
 
+let githubLanguageData = {
+  languagesList: []
+};
+
+let langLabels = [];
+let langValues = [];
+
 const fetchUserData = function (dataObject) {
     fetch(`/api/stats/general_user`)
       .then((response) => {
@@ -47,10 +54,114 @@ const fetchUserData = function (dataObject) {
       .catch(error => {
         console.error('There has been a problem with fetch operation:', error);
       });
-  };
-  
-fetchUserData(githubUserData);
+};
 
+const fetchLanguageData = function (dataObject) {
+  fetch(`/api/stats/languages`)
+    .then((response) => {
+      if (!response.ok){
+        throw new Error('HTTP response NOT OK');
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (!data){
+        throw new Error('Data is undefined');
+      }
+      else{
+        let languagesList = data;
+        //console.log(languagesList[0]['repo_languages'][0]['C']);
+        let langRepoCount = languagesList.length;
+        for (const repo of languagesList){
+          for (const lang of repo['repo_languages']){
+            let langName = "";
+            if (Object.keys(lang).length > 0){
+              langName = Object.keys(lang)[0];
+              //console.log(langName);
+              //console.log(lang[langName]);
+              if (langLabels.includes(langName)){
+                langValues[langLabels.indexOf(langName)] += Number(lang[langName] / Number(langRepoCount));
+              }
+              else{
+                langLabels.push(langName);
+                langValues.push(Number(lang[langName]) / Number(langRepoCount));
+              }
+            }   
+          }
+        }
+
+        let colours = ['#e95211', '#c1ba1f', '#19499a', '#0b9280', '#e11024'];
+
+        let chartData = {
+          labels: langLabels,
+          datasets: [
+            {
+              backgroundColor: colours.slice(0,4),
+              borderWidth: 0,
+              data: langValues
+            }
+          ]
+        };
+        
+        var chartBox = document.getElementById("lang-chart");
+        var chartLegendBox = document.getElementById("js-legend");
+        if (chartBox) {
+          var chart = new Chart(chartBox, {
+            type: 'pie',
+            data: chartData,
+            options: {
+              cutoutPercentage: 0,
+              plugins: {
+                legend: {
+                  display: false, //legend to be shown in separate container(?)
+                },
+                tooltip: {
+                  enabled: false
+                }
+              },
+              responsive: true,
+              maintainAspectRatio: true,
+            },
+            plugins: [{
+              beforeInit: function(chart, args, options) {
+                // Make sure we're applying the legend to the right chart
+                if (chart.canvas.id === "lang-chart") {
+                  const ul = document.createElement('ul');
+                  chart.data.labels.forEach((label, i) => {
+                    ul.innerHTML += `
+                      <li class="label-${ label.toLowerCase().replaceAll(" ", "") }">
+                        <span style="background-color: ${ chart.data.datasets[0].backgroundColor[i] }">${ chart.data.datasets[0].data[i] }</span><br>
+                        ${ label }
+                      </li>
+                    `;
+                  });
+                  if (chartLegendBox){
+                    return chartLegendBox.appendChild(ul);
+                  } 
+                }
+                return;
+              }
+            }]  
+          });    
+        }
+
+      } 
+    })
+    .catch(error => {
+      console.error('There has been a problem with fetch operation:', error);
+    });
+};
+
+export function importLanguageLabels(){
+  return langLabels;
+}
+
+export function importLanguageValues(){
+  return langValues;
+}
+
+fetchUserData(githubUserData);
+fetchLanguageData(githubLanguageData);
 
 
 
