@@ -90,15 +90,40 @@ const fetchLanguageData = function (dataObject) {
           }
         }
 
+        let langMapped = langLabels.map(function(d, i) {
+          return {
+            label: d,
+            value: langValues[i] || 0
+          };
+        });
+        
+        let sortedLangMapped = langMapped.sort(function(a, b) {
+          return b.value-a.value;
+        });
+        
+        if (sortedLangMapped.length > 5){
+          sortedLangMapped.slice(0,5);
+        }
+
+        let sortedLangLabels = [];
+        let sortedLangValues = [];
+        for (const pos of sortedLangMapped){
+          sortedLangLabels.push(pos.label);
+          sortedLangValues.push(pos.value);
+        };
+        
+        console.log(sortedLangLabels);
+        console.log(sortedLangValues);
+
         let colours = ['#e95211', '#c1ba1f', '#19499a', '#0b9280', '#e11024'];
 
         let chartData = {
-          labels: langLabels,
+          labels: sortedLangLabels,
           datasets: [
             {
-              backgroundColor: colours.slice(0,4),
+              backgroundColor: colours.slice(0,langRepoCount+1),
               borderWidth: 0,
-              data: langValues
+              data: sortedLangValues
             }
           ]
         };
