@@ -22,9 +22,14 @@ jobs:
         id: git-check
         run: echo ::set-output name=modified::$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)
       - name: Push changes
+        if: steps.git-check.outputs.modified == 'true'
         run: |
           git config --global user.name 'Karol Niemczycki'
           git config --global user.email '01133121@pw.edu.pl'
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git commit -am "Automated autoyapf fixes"
           git push
+      - name: End checking
+        if: steps.git-check.outputs.modified == 'false'
+        run: |
+          echo ::Success!
