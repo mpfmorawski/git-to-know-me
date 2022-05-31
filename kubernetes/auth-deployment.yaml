@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: auth
+  name: auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: auth
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: auth
+    spec:
+      containers:
+        - image: karolniem/auth:latest
+          name: auth
+          ports:
+            - containerPort: 8001
+          resources: {}
+      restartPolicy: Always
+status: {}

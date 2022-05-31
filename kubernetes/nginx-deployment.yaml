@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: nginx
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: nginx
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: nginx
+    spec:
+      containers:
+        - env:
+            - name: NGINX_HOST
+              value: foobar.com
+            - name: NGINX_PORT
+              value: "8000"
+          image: nginx
+          name: webserver
+          ports:
+            - containerPort: 8000
+          resources: {}
+      restartPolicy: Always
+status: {}
