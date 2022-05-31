@@ -71,6 +71,18 @@ docker-compose build
 docker-compose up
 ```
 
+### Kubernetes
+
+In the terminal type:
+```bash
+minikube start
+minikube tunnel
+```
+Then, open the second terminal and type:
+```bash
+kubectl apply -f github-deployment.yaml,github-service.yaml,aggr-service.yaml,aggr-deployment.yaml,auth-service.yaml,auth-deployment.yaml,web-deployment.yaml,web-service.yaml,nginx-deployment.yaml,nginx-service.yaml,db-deployment.yaml,db-service.yaml,web-claim0-persistentvolumeclaim.yaml
+```
+
 ### Microservice version
 
 - Install nginx (https://www.nginx.com/resources/wiki/start/topics/tutorials/install/)
