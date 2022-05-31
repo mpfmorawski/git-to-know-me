@@ -8,13 +8,10 @@ let githubUserData = {
   githubForkCount: 0
 };
 
-let githubLanguageData = {
-  languagesList: []
-};
-
-let langLabels = [];
-let langValues = [];
-
+/**
+ * Fetches data for profile and general statistics panels.
+ * @param {*} dataObject
+ */
 const fetchUserData = function (dataObject) {
     fetch(`/api/stats/general_user`)
       .then((response) => {
@@ -38,6 +35,7 @@ const fetchUserData = function (dataObject) {
           let nameLabelList = document.querySelectorAll(".profile-name");
           let usernameLabelList = document.querySelectorAll(".profile-username");
 
+          //update profile panel
           for (const element of nameLabelList){
               element.textContent = dataObject.githubName + " " + dataObject.githubSurname;
           }
@@ -46,6 +44,7 @@ const fetchUserData = function (dataObject) {
               element.textContent = dataObject.githubUsername;
           }
 
+          //update general statistics panel
           document.getElementById("repo-count").textContent = dataObject.githubRepoCount;
           document.getElementById("star-count").textContent = dataObject.githubStarCount;
           document.getElementById("fork-count").textContent = dataObject.githubForkCount;
@@ -56,7 +55,10 @@ const fetchUserData = function (dataObject) {
       });
 };
 
-const fetchLanguageData = function (dataObject) {
+/**
+ * Fetches data for programming languages chart.
+ */
+const fetchLanguageData = function () {
   fetch(`/api/stats/languages`)
     .then((response) => {
       if (!response.ok){
@@ -69,16 +71,16 @@ const fetchLanguageData = function (dataObject) {
         throw new Error('Data is undefined');
       }
       else{
-        let languagesList = data;
-        //console.log(languagesList[0]['repo_languages'][0]['C']);
-        let langRepoCount = languagesList.length;
-        for (const repo of languagesList){
+        let langLabels = [];
+        let langValues = [];
+        let langRepoCount = data.length;
+        
+        //create languages list and calculate percentages
+        for (const repo of data){
           for (const lang of repo['repo_languages']){
             let langName = "";
             if (Object.keys(lang).length > 0){
               langName = Object.keys(lang)[0];
-              //console.log(langName);
-              //console.log(lang[langName]);
               if (langLabels.includes(langName)){
                 langValues[langLabels.indexOf(langName)] += Number(lang[langName]) / Number(langRepoCount) * 100;
               }
@@ -90,21 +92,19 @@ const fetchLanguageData = function (dataObject) {
           }
         }
 
+        //sort obtained data in descending order, limit to 5 items and 1 decimal place
         let langMapped = langLabels.map(function(d, i) {
           return {
             label: d,
             value: langValues[i] || 0
           };
         });
-        
         let sortedLangMapped = langMapped.sort(function(a, b) {
           return b.value-a.value;
         });
-        
         if (sortedLangMapped.length > 5){
           sortedLangMapped.slice(0,5);
         }
-
         let sortedLangLabels = [];
         let sortedLangValues = [];
         for (const pos of sortedLangMapped){
@@ -112,8 +112,8 @@ const fetchLanguageData = function (dataObject) {
           sortedLangValues.push(pos.value.toFixed(1));
         };
 
+        //auxilliary data for chart generation
         let colours = ['#e95211', '#c1ba1f', '#19499a', '#0b9280', '#e11024'];
-
         let chartData = {
           labels: sortedLangLabels,
           datasets: [
@@ -125,6 +125,7 @@ const fetchLanguageData = function (dataObject) {
           ]
         };
         
+        //generate chart and pretty-print its legend
         var chartBox = document.getElementById("lang-chart");
         var chartLegendBox = document.getElementById("js-legend");
         if (chartBox) {
@@ -135,7 +136,7 @@ const fetchLanguageData = function (dataObject) {
               cutoutPercentage: 0,
               plugins: {
                 legend: {
-                  display: false, //legend to be shown in separate container(?)
+                  display: false, //legend to be shown in separate container
                 },
                 tooltip: {
                   enabled: false
@@ -146,8 +147,7 @@ const fetchLanguageData = function (dataObject) {
             },
             plugins: [{
               beforeInit: function(chart, args, options) {
-                // Make sure we're applying the legend to the right chart
-                if (chart.canvas.id === "lang-chart") {
+                if (chart.canvas.id === "lang-chart") { //to make sure legend is applied to the right chart
                   const ul = document.createElement('ul');
                   chart.data.labels.forEach((label, i) => {
                     ul.innerHTML += `
@@ -168,7 +168,6 @@ const fetchLanguageData = function (dataObject) {
             }]  
           });    
         }
-
       } 
     })
     .catch(error => {
@@ -176,16 +175,8 @@ const fetchLanguageData = function (dataObject) {
     });
 };
 
-export function importLanguageLabels(){
-  return langLabels;
-}
-
-export function importLanguageValues(){
-  return langValues;
-}
-
 fetchUserData(githubUserData);
-fetchLanguageData(githubLanguageData);
+fetchLanguageData();
 
 
 
