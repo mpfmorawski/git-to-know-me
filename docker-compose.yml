@@ -49,7 +49,7 @@ services:
    restart: always
    ports:
      - "8000:8000"
-   environment:
-      - POSTGRES_DB=authDB
-      - POSTGRES_USER=userDB
-      - POSTGRES_PASSWORD=passwd123
+  #  environment:
+  #     - POSTGRES_DB=authDB
+  #     - POSTGRES_USER=userDB
+  #     - POSTGRES_PASSWORD=passwd123
