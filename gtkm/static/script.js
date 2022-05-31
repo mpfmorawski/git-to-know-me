@@ -28,21 +28,26 @@ const fetchUserData = function (dataObject) {
           dataObject.githubName = data.name;
           dataObject.githubSurname = data.surname;
           dataObject.githubUsername = data.user_name;
+          dataObject.githubAvatar = data.avatar_url;
           dataObject.githubRepoCount = data.repos_count;
           dataObject.githubStarCount = data.stargaze_count;
           dataObject.githubForkCount = data.forks_count;
 
           let nameLabelList = document.querySelectorAll(".profile-name");
           let usernameLabelList = document.querySelectorAll(".profile-username");
+          let avatarList = document.querySelectorAll(".profile-picture");
 
           //update profile panel
           for (const element of nameLabelList){
               element.textContent = dataObject.githubName + " " + dataObject.githubSurname;
           }
-
           for (const element of usernameLabelList){
               element.textContent = dataObject.githubUsername;
           }
+          for (const element of avatarList){
+              element.src = dataObject.githubAvatar;
+          }
+
 
           //update general statistics panel
           document.getElementById("repo-count").textContent = dataObject.githubRepoCount;
