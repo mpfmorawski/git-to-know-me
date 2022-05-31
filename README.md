@@ -72,7 +72,6 @@ docker-compose up
 ```
 
 ### Kubernetes
-<<<<<<< HEAD
 
 In the terminal type:
 ```bash
@@ -82,11 +81,6 @@ minikube tunnel
 Then, open the second terminal and type:
 ```bash
 kubectl apply -f github-deployment.yaml,github-service.yaml,aggr-service.yaml,aggr-deployment.yaml,auth-service.yaml,auth-deployment.yaml,web-deployment.yaml,web-service.yaml,nginx-deployment.yaml,nginx-service.yaml,db-deployment.yaml,db-service.yaml,web-claim0-persistentvolumeclaim.yaml
-=======
-```bash
-minikube start
-kubectl apply -f web-service.yaml,web-deployment.yaml,web-claim0-persistentvolumeclaim.yaml,db-service.yaml,db-deployment.yaml
->>>>>>> cdb779728b718c045299f5555d9155df6fcef7b5
 ```
 
 ### Microservice version
