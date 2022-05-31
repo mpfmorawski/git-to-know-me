@@ -10,20 +10,43 @@ services:
       - POSTGRES_DB=authDB
       - POSTGRES_USER=userDB
       - POSTGRES_PASSWORD=passwd123
-  web:
+  nginx:
+    image: nginx
     build: .
+    container_name: webserver
     restart: always
-    command: uvicorn gtkm.main:app --reload --host 0.0.0.0 --env-file .env
-    volumes:
-      - .:/gtkm/
-    ports:
-      - "8000:8000"
-    links:
-      - db
     environment:
+      - NGINX_HOST=foobar.com
+  auth:
+   image: nginx
+   restart: always
+   ports:
+     - "8001:8001"
+   links:
+     - db
+   environment:
       - POSTGRES_DB=authDB
       - POSTGRES_USER=userDB
       - POSTGRES_PASSWORD=passwd123
       - POSTGRES_HOST=db
-    depends_on:
-      - db
+   depends_on:
+     - db
+  github:
+   image: nginx
+   restart: always
+   ports:
+     - "8002:8002"
+   links:
+     - db
+  aggr:
+   image: nginx
+   restart: always
+   ports:
+     - "8004:8004"
+   links:
+     - db
+  web:
+   build: .
+   restart: always
+   ports:
+     - "8000:8000"

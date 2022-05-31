@@ -42,8 +42,8 @@ def gen_url(endpoint: str) -> str:
         if port is None:
             port = SERVICE_PORTS[Service.ENDPOINT]
             logger.warning(
-                f"Unknown endpoint: {endpoint}, reditecting to: http://127.0.0.1:{port}{endpoint}"
+                f"Unknown endpoint: {endpoint}, reditecting to: http://10.107.1.105:{port}{endpoint}"
             )
     else:
         port = 8000
-    return f"http://127.0.0.1:{port}{endpoint}"
+    return f"http://10.107.1.105:{port}{endpoint}"
