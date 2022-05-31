@@ -445,6 +445,10 @@ color: #FFFFFF;
   list-style: none;
 }
 
+.content .chart .chart-legendbox .legend-value{
+  font-weight: 300;
+}
+
 .content .repo-list .repo-header{
   display: flex;
   justify-content: space-between;

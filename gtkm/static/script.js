@@ -80,11 +80,11 @@ const fetchLanguageData = function (dataObject) {
               //console.log(langName);
               //console.log(lang[langName]);
               if (langLabels.includes(langName)){
-                langValues[langLabels.indexOf(langName)] += Number(lang[langName] / Number(langRepoCount));
+                langValues[langLabels.indexOf(langName)] += Number(lang[langName]) / Number(langRepoCount) * 100;
               }
               else{
                 langLabels.push(langName);
-                langValues.push(Number(lang[langName]) / Number(langRepoCount));
+                langValues.push(Number(lang[langName]) / Number(langRepoCount) * 100);
               }
             }   
           }
@@ -109,11 +109,8 @@ const fetchLanguageData = function (dataObject) {
         let sortedLangValues = [];
         for (const pos of sortedLangMapped){
           sortedLangLabels.push(pos.label);
-          sortedLangValues.push(pos.value);
+          sortedLangValues.push(pos.value.toFixed(1));
         };
-        
-        console.log(sortedLangLabels);
-        console.log(sortedLangValues);
 
         let colours = ['#e95211', '#c1ba1f', '#19499a', '#0b9280', '#e11024'];
 
@@ -155,8 +152,10 @@ const fetchLanguageData = function (dataObject) {
                   chart.data.labels.forEach((label, i) => {
                     ul.innerHTML += `
                       <li class="label-${ label.toLowerCase().replaceAll(" ", "") }">
-                        <span style="background-color: ${ chart.data.datasets[0].backgroundColor[i] }">${ chart.data.datasets[0].data[i] }</span><br>
-                        ${ label }
+                        <span style="height: 24px; width: 24px; background-color: ${ chart.data.datasets[0].backgroundColor[i] };
+                          border-radius: 50%; display: inline-block;"></span>
+                        <span class="legend-label">${ label }</span><br>
+                        <span class="legend-value">${ chart.data.datasets[0].data[i] }%</span>
                       </li>
                     `;
                   });
