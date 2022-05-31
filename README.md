@@ -81,7 +81,11 @@ minikube tunnel
 Then, open the second terminal and type:
 ```bash
 cd kubernetes
-kubectl apply -f github-deployment.yaml,github-service.yaml,aggr-service.yaml,aggr-deployment.yaml,auth-service.yaml,auth-deployment.yaml,web-deployment.yaml,web-service.yaml,nginx-deployment.yaml,nginx-service.yaml,db-deployment.yaml,db-service.yaml,web-claim0-persistentvolumeclaim.yaml
+```
+```bash
+kubectl apply -f github-deployment.yaml,github-service.yaml,aggr-service.yaml,aggr-deployment.yaml,auth-service.yaml,auth-deployment.yaml,web-deployment.yaml,web-service.yaml,nginx-deployment.yaml,nginx-service.yaml,web-claim0-persistentvolumeclaim.yaml
+```
+```bash
 kubectl get svc
 ```
 Check the external IP of the web service and type:
