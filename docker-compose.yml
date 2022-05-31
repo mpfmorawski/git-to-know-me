@@ -1,15 +1,15 @@
 version: "3.1"
 
 services:
-  db:
-    image: postgres
-    restart: always
-    ports:
-      - 5432:5432
-    environment:
-      - POSTGRES_DB=authDB
-      - POSTGRES_USER=userDB
-      - POSTGRES_PASSWORD=passwd123
+  # db:
+  #   image: postgres
+  #   restart: always
+  #   ports:
+  #     - '5432:5432'
+  #   environment:
+  #     - POSTGRES_DB=authDB
+  #     - POSTGRES_USER=userDB
+  #     - POSTGRES_PASSWORD=passwd123
   nginx:
     image: nginx
     build: .
@@ -22,31 +22,34 @@ services:
    restart: always
    ports:
      - "8001:8001"
-   links:
-     - db
-   environment:
-      - POSTGRES_DB=authDB
-      - POSTGRES_USER=userDB
-      - POSTGRES_PASSWORD=passwd123
-      - POSTGRES_HOST=db
-   depends_on:
-     - db
+  #  environment:
+  #     - POSTGRES_DB=authDB
+  #     - POSTGRES_USER=userDB
+  #     - POSTGRES_PASSWORD=passwd123
   github:
    image: nginx
    restart: always
    ports:
      - "8002:8002"
-   links:
-     - db
+  #  environment:
+  #     - POSTGRES_DB=authDB
+  #     - POSTGRES_USER=userDB
+  #     - POSTGRES_PASSWORD=passwd123
   aggr:
    image: nginx
    restart: always
    ports:
      - "8004:8004"
-   links:
-     - db
+  #  environment:
+  #     - POSTGRES_DB=authDB
+  #     - POSTGRES_USER=userDB
+  #     - POSTGRES_PASSWORD=passwd123
   web:
    build: .
    restart: always
    ports:
      - "8000:8000"
+   environment:
+      - POSTGRES_DB=authDB
+      - POSTGRES_USER=userDB
+      - POSTGRES_PASSWORD=passwd123
