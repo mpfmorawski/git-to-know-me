@@ -132,9 +132,13 @@ class GithubFetchRepositoryData(FetcherBase):
             if counter_MVP_ONLY >= 5:
                 break
 
-        final_json = self._put_proper_order(temp_final_json)
+        #final_json = self._put_proper_order(temp_final_json)
+        num = 1
+        for json_file in temp_final_json:
+            json_file["top_5_place"] = num
+            num = num + 1
 
-        self.json_file_to_return = final_json
+        self.json_file_to_return = temp_final_json
 
     def _put_proper_order(self, json_file_RAW):
 
