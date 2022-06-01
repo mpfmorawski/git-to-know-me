@@ -456,7 +456,11 @@ color: #FFFFFF;
 }
 
 .content .repo-list .repo-sorttype{
+  display: inline-block;
   margin: 10px;
+  z-index: 0;
+  background: #393939;
+  border-radius: 10px;
   
   font-family: 'Lato';
   font-style: normal;
@@ -465,6 +469,10 @@ color: #FFFFFF;
   line-height: 29px;
 
   white-space: nowrap;
+}
+
+.content .repo-list .caret{
+  margin-right: 5px;
 }
 
 .content .repo-list .repo-panel{
@@ -565,6 +573,7 @@ color: #FFFFFF;
   position: relative;
   top: 15px;
   height: fit-content;
+  margin: 10px;
 
   display: flex;
   flex-direction: column;
