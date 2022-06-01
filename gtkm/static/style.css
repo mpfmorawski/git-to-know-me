@@ -443,6 +443,7 @@ color: #FFFFFF;
 
 .content .chart .chart-legendbox ul{
   list-style: none;
+  white-space: nowrap;
 }
 
 .content .chart .chart-legendbox .legend-value{
@@ -475,10 +476,11 @@ color: #FFFFFF;
 
 .content .repo-list .repo-box{
   position: relative;
-  height: 210px;
+  height: 180px;
   background: #494949;
   border-radius: 10px;
   padding: 10px;
+  margin-bottom: 10px;
 
   display: flex;
 }

@@ -232,6 +232,11 @@ const fetchLanguageData = function () {
 
         //create a list with information for each repo
         let repoDataList = [];
+        const dateOptions = {
+          month: "long",
+          day: "numeric",
+          year: "numeric"
+        };
         for (const repo of data){
           let repoData = new RepoData(repo.repo_url, repo.repository_name, repo.repo_owner, repo.stargaze_count, 
             repo.forks_count, repo.watchers_count, repo.contributors_count, new Date(repo.last_user_commit));
@@ -272,11 +277,11 @@ const fetchLanguageData = function () {
           </div>
           <div class="sort-data">
             <span class="sort-title">last commit:</span><br>
-            <span class="sort-value">${repo.last.toString()}</span>
+            <span class="sort-value">${repo.last.toLocaleDateString("en-US", dateOptions)}</span>
           </div>
           `;
           if (repoPanel){
-            return repoPanel.appendChild(div);
+            repoPanel.appendChild(div);
           } 
         }
       }
