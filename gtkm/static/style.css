@@ -480,6 +480,13 @@ color: #FFFFFF;
   margin: 10px;
 
   overflow-y: scroll;
+  scrollbar-width: none; /*Firefox*/
+  -ms-overflow-style: none; /*Edge / IE*/
+}
+
+.content .repo-list .repo-panel::-webkit-scrollbar{ /*Chrome / Chromium-based*/
+  width: 0;
+  height: 0;
 }
 
 .content .repo-list .repo-box{
