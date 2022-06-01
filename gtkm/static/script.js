@@ -8,6 +8,30 @@ let githubUserData = {
   githubForkCount: 0
 };
 
+/*let githubRepoData = {
+  repoUrl: "",
+  repoName: "",
+  repoOwner: "",
+  repoStarCount: 0,
+  repoForkCount: 0,
+  repoWatchCount: 0,
+  repoContribCount: 0,
+  repoLastCommit: ""
+}*/
+
+class RepoData {
+  constructor(url, name, owner, star, fork, watch, contrib, last) {
+    this.url = url;
+    this.name = name;
+    this.owner = owner;
+    this.star = star;
+    this.fork = fork;
+    this.watch = watch;
+    this.contrib = contrib;
+    this.last = last;
+  }
+}
+
 /**
  * Fetches data for profile and general statistics panels.
  * @param {*} dataObject
@@ -180,8 +204,91 @@ const fetchLanguageData = function () {
     });
 };
 
+/**
+ * Fetches data for top repositories panel.
+ */
+ const fetchRepoData = function () {
+  fetch(`/api/stats/top_repos`)
+    .then((response) => {
+      if (!response.ok){
+        throw new Error('HTTP response NOT OK');
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (!data){
+        throw new Error('Data is undefined');
+      }
+      else{
+        /*dataObject.repoUrl = data.repo_url;
+        dataObject.repoName = data.repository_name;
+        dataObject.repoOwner = data.repo_owner;
+        dataObject.repoStarCount = data.stargaze_count;
+        dataObject.repoForkCount = data.forks_count;
+        dataObject.repoWatchCount = data.watchers_count;
+        dataObject.repoContribCount = data.contributors_count;
+        dataObject.repoLastCommit = data.last_user_commit;
+        */
+
+        //create a list with information for each repo
+        let repoDataList = [];
+        for (const repo of data){
+          let repoData = new RepoData(repo.repo_url, repo.repository_name, repo.repo_owner, repo.stargaze_count, 
+            repo.forks_count, repo.watchers_count, repo.contributors_count, new Date(repo.last_user_commit));
+          repoDataList.push(repoData);
+        }
+        
+        //sort the list by last commit date and sort in descending order
+        let repoDataSortedByCommit = repoDataList.sort(function(a, b) {
+          return b.last-a.last;
+        });
+
+        //sort the list in two another ways (most popular = stars, most contributed to = ?)
+        
+        //create HTML blocks with acquired and sorted data
+        let repoPanel = document.getElementById("js-repos");
+        for (const repo of repoDataSortedByCommit){
+          const div = document.createElement('div');
+          div.className = "repo-box";
+          div.innerHTML += `
+          <img src="images/prototype_screenshot 1.png" class="repo-picture" />
+          <div class="repo-data">
+            <img src="images/GitHub-Mark-32px.png" alt=""><span class="repo-username">${repo.owner}</span><br>
+            <a href="${repo.url}" class="repo-url">${repo.name}</a>
+            <div class="repo-stats">
+              <div class="stats-slot">
+                <img src="images/star_logo.png" class="stats-logo"><span class="stats-value">${repo.star}</span>
+              </div>
+              <div class="stats-slot">
+                <img src="images/fork_logo.png" class="stats-logo"><span class="stats-value">${repo.fork}</span>
+              </div>
+              <div class="stats-slot">
+                <img src="images/eye_logo.png" class="stats-logo"><span class="stats-value">${repo.watch}</span>
+              </div>
+              <div class="stats-slot">
+                <img src="images/contrib_logo.png" class="stats-logo"><span class="stats-value">${repo.contrib}</span>
+              </div>
+            </div>
+          </div>
+          <div class="sort-data">
+            <span class="sort-title">last commit:</span><br>
+            <span class="sort-value">${repo.last.toString()}</span>
+          </div>
+          `;
+          if (repoPanel){
+            return repoPanel.appendChild(div);
+          } 
+        }
+      }
+    })
+    .catch(error => {
+      console.error('There has been a problem with fetch operation:', error);
+    });
+};
+
 fetchUserData(githubUserData);
 fetchLanguageData();
+fetchRepoData();
 
 
 
