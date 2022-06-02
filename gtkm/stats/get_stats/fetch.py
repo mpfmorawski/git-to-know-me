@@ -127,12 +127,12 @@ class GithubFetchRepositoryData(FetcherBase):
 
             temp_final_json.append(temp_json)
 
-            counter_MVP_ONLY = counter_MVP_ONLY + 1
+#            counter_MVP_ONLY = counter_MVP_ONLY + 1
 
-            if counter_MVP_ONLY >= 5:
-                break
+#            if counter_MVP_ONLY >= 5:
+#                break
 
-        #final_json = self._put_proper_order(temp_final_json)
+#        final_json = self._put_proper_order(temp_final_json)
         num = 1
         for json_file in temp_final_json:
             json_file["top_5_place"] = num
