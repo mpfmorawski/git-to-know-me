@@ -198,6 +198,7 @@ const fetchLanguageData = function () {
         }
 
         //sort obtained data in descending order, limit to 5 items and 1 decimal place
+        let otherValue = 0;
         let langMapped = langLabels.map(function(d, i) {
           return {
             label: d,
@@ -208,7 +209,11 @@ const fetchLanguageData = function () {
           return b.value-a.value;
         });
         if (sortedLangMapped.length > 5){
-          sortedLangMapped.slice(0,5);
+          let otherLangMapped = sortedLangMapped.slice(4,-1);
+          sortedLangMapped = sortedLangMapped.slice(0,5);
+          for (const lang of otherLangMapped){
+            otherValue += lang.value;
+          }
         }
         let sortedLangLabels = [];
         let sortedLangValues = [];
@@ -216,9 +221,11 @@ const fetchLanguageData = function () {
           sortedLangLabels.push(pos.label);
           sortedLangValues.push(pos.value.toFixed(1));
         };
+        sortedLangLabels.push("Other");
+        sortedLangValues.push(otherValue.toFixed(1));
 
         //auxilliary data for chart generation
-        let colours = ['#e95211', '#c1ba1f', '#19499a', '#0b9280', '#e11024'];
+        let colours = ['#e95211', '#c1ba1f', '#19499a', '#0b9280', '#e11024', '#797979'];
         let chartData = {
           labels: sortedLangLabels,
           datasets: [
