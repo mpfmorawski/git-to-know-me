@@ -233,9 +233,9 @@ class GithubFetchLanguageData(FetcherBase):
 
             temp_final_json.append(temporary_json_data_file)
 
-            counter_MVP_ONLY = counter_MVP_ONLY + 1
+#            counter_MVP_ONLY = counter_MVP_ONLY + 1
 
-            if counter_MVP_ONLY >= 5:
-                break
+#            if counter_MVP_ONLY >= 5:
+#                break
 
         self.json_file_to_return = temp_final_json
