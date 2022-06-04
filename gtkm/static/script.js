@@ -21,9 +21,9 @@ class RepoData {
   }
 }
 
-let repoDataTopSortedByCommit = [];
-let repoDataTopSortedByStars = [];
-let repoDataTopSortedByContrib = [];
+let repoDataSortedByCommit = [];
+let repoDataSortedByStars = [];
+let repoDataSortedByContrib = [];
 const dateOptions = {
   month: "long",
   day: "numeric",
@@ -41,7 +41,7 @@ const refreshReposList = function (sortType) {
   let sortTypeValue = 0;
   if (sortType === "most popular"){
     try {
-      sortRepoList = repoDataTopSortedByStars;
+      sortRepoList = repoDataSortedByStars;
       sortTypeText = "stars:";
       sortTypeValue = 1;
     } catch (error) {
@@ -50,7 +50,7 @@ const refreshReposList = function (sortType) {
   }
   else if (sortType === "most contributed to"){
     try {
-      sortRepoList = repoDataTopSortedByContrib;
+      sortRepoList = repoDataSortedByContrib;
       sortTypeText = "contributions:";
       sortTypeValue = 2;
     } catch (error) {
@@ -59,7 +59,7 @@ const refreshReposList = function (sortType) {
   }
   else{
     try {
-      sortRepoList = repoDataTopSortedByCommit;
+      sortRepoList = repoDataSortedByCommit;
       sortTypeText = "last commit:";
       sortTypeValue = 0;
     } catch (error) {
@@ -313,26 +313,26 @@ const fetchLanguageData = function () {
         }
         
         //sort the list by last commit date, sort in descending order and limit to 5 repos
-        let repoDataSortedByCommit = repoDataList.sort(function(a, b) {
+        repoDataSortedByCommit = repoDataList.sort(function(a, b) {
           return b.last-a.last;
         });
         if (repoDataSortedByCommit.length > 5){
-          repoDataTopSortedByCommit = repoDataSortedByCommit.slice(0,5);
+          repoDataSortedByCommit = repoDataSortedByCommit.slice(0,5);
         }
 
         //sort the list in two another ways (most popular = stars, most contributed to = ?)
-        let repoDataSortedByStars = repoDataList.sort(function(a, b) {
+        repoDataSortedByStars = repoDataList.sort(function(a, b) {
           return b.star-a.star;
         });
         if (repoDataSortedByStars.length > 5){
-          repoDataTopSortedByStars = repoDataSortedByStars.slice(0,5);
+          repoDataSortedByStars = repoDataSortedByStars.slice(0,5);
         }
 
-        let repoDataSortedByContrib = repoDataList.sort(function(a, b) {
+        repoDataSortedByContrib = repoDataList.sort(function(a, b) {
           return b.contrib-a.contrib;
         });
         if (repoDataSortedByContrib.length > 5){
-          repoDataTopSortedByContrib = repoDataSortedByContrib.slice(0,5);
+          repoDataSortedByContrib = repoDataSortedByContrib.slice(0,5);
         }
         
         //create HTML blocks with acquired and sorted data
