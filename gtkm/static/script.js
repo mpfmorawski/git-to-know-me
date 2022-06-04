@@ -230,7 +230,7 @@ const fetchLanguageData = function () {
           labels: sortedLangLabels,
           datasets: [
             {
-              backgroundColor: colours.slice(0,langRepoCount+1),
+              backgroundColor: colours.slice(0,sortedLangMapped.length+1),
               borderWidth: 0,
               data: sortedLangValues
             }
