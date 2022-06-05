@@ -313,24 +313,24 @@ const fetchLanguageData = function () {
         }
         
         //sort the list by last commit date, sort in descending order and limit to 5 repos
-        repoDataSortedByCommit = repoDataList.sort(function(a, b) {
+        repoDataSortedByCommit = [...repoDataList.sort(function(a, b) {
           return b.last-a.last;
-        });
+        })];
         if (repoDataSortedByCommit.length > 5){
           repoDataSortedByCommit = repoDataSortedByCommit.slice(0,5);
         }
 
         //sort the list in two another ways (most popular = stars, most contributed to = ?)
-        repoDataSortedByStars = repoDataList.sort(function(a, b) {
+        repoDataSortedByStars = [...repoDataList.sort(function(a, b) {
           return b.star-a.star;
-        });
+        })];
         if (repoDataSortedByStars.length > 5){
           repoDataSortedByStars = repoDataSortedByStars.slice(0,5);
         }
 
-        repoDataSortedByContrib = repoDataList.sort(function(a, b) {
+        repoDataSortedByContrib = [...repoDataList.sort(function(a, b) {
           return b.contrib-a.contrib;
-        });
+        })];
         if (repoDataSortedByContrib.length > 5){
           repoDataSortedByContrib = repoDataSortedByContrib.slice(0,5);
         }
