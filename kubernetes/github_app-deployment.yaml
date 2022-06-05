@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: github-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: github-app
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        run: github-app
+    spec:
+      containers:
+        - image: gtkm-github_app:latest
+          name: auth-app
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+      restartPolicy: Always
+status: {}

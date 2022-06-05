@@ -1,0 +1,17 @@
+FROM python:3.9-slim-buster
+
+WORKDIR /user/app
+
+COPY ./requirements.txt /user/app/requirements.txt
+
+RUN pip install --no-cache-dir --upgrade -r /user/app/requirements.txt
+
+COPY ./gtkm /user/app/gtkm
+
+COPY ./.env /user/app/.env
+
+COPY ./main_microservices.py /user/app/main_microservices.py
+
+#CMD ["uvicorn", "main_microservices:stats_app", "--reload", "--host", "0.0.0.0", "--env-file", ".env" ,"--port","80", "--app-dir", "."]
+
+CMD ["python3", "main_microservices.py", "-s", "stats_app", "--port", "80"]

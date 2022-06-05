@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth
+  name: auth-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: auth
+      run: auth-app
   strategy: {}
   template:
     metadata:
       labels:
-        run: auth
+        run: auth-app
     spec:
       containers:
-        - image: gtkm-auth:latest
-          name: auth
+        - image: gtkm-auth_app:latest
+          name: auth-app
           imagePullPolicy: Never
           ports:
             - containerPort: 80

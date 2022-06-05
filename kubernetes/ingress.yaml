@@ -8,11 +8,46 @@ spec:
   rules:
   - http:
       paths:
-        - path: "/api"
+        - path: "/api/auth"
           pathType: Prefix
           backend:
             service:
-              name: auth
+              name: auth-app
+              port:
+                number: 80
+        - path: "/auth"
+          pathType: Prefix
+          backend:
+            service:
+              name: auth-app
+              port:
+                number: 80
+        - path: "/api/github"
+          pathType: Prefix
+          backend:
+            service:
+              name: github-app
+              port:
+                number: 80
+        - path: "/github"
+          pathType: Prefix
+          backend:
+            service:
+              name: github-app
+              port:
+                number: 80
+        - path: "/api/stats"
+          pathType: Prefix
+          backend:
+            service:
+              name: stats-app
+              port:
+                number: 80
+        - path: "/stats"
+          pathType: Prefix
+          backend:
+            service:
+              name: stats-app
               port:
                 number: 80
         - path: "/"

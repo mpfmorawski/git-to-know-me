@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: auth-app
+  name: auth-app
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+  selector:
+    run: auth-app
+status:
+  loadBalancer: {}

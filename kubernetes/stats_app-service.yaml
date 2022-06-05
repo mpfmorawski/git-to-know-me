@@ -2,13 +2,13 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    run: auth
-  name: auth
+    run: stats-app
+  name: stats-app
 spec:
   ports:
     - port: 80
       protocol: TCP
   selector:
-    run: auth
+    run: stats-app
 status:
   loadBalancer: {}

@@ -1,21 +1,11 @@
 version: "3.1"
 
 services:
-  # db:
-  #   image: postgres
-  #   restart: always
-  #   ports:
-  #     - '5432:5432'
-  #   environment:
-  #     - POSTGRES_DB=authDB
-  #     - POSTGRES_USER=userDB
-  #     - POSTGRES_PASSWORD=passwd123
-
 
   nginx:
     build:
       context: .
-      dockerfile: Dockerfile.frontend
+      dockerfile: Dockerfile.nginx
     container_name: webserver
     restart: always
     ports:
@@ -24,48 +14,28 @@ services:
   auth:
     build:
       context: .
-      dockerfile: Dockerfile.github
+      dockerfile: Dockerfile.auth_app
     container_name: auth
     restart: always
     ports:
      - "8001:80"
 
+  github:
+    build:
+      context: .
+      dockerfile: Dockerfile.github_app
+    container_name: github
+    restart: always
+    ports:
+     - "8002:80"
 
-    # environment:
-    #   - NGINX_HOST=foobar.com
-  # auth:
-  #  image: nginx
-  #  restart: always
-  #  ports:
-  #    - "8001:8001"
-  #  environment:
-  #     - POSTGRES_DB=authDB
-  #     - POSTGRES_USER=userDB
-  #     - POSTGRES_PASSWORD=passwd123
-  # github:
-  #  image: nginx
-  #  restart: always
-  #  ports:
-  #    - "8002:8002"
-  #  environment:
-  #     - POSTGRES_DB=authDB
-  #     - POSTGRES_USER=userDB
-  #     - POSTGRES_PASSWORD=passwd123
-  # aggr:
-  #  image: nginx
-  #  restart: always
-  #  ports:
-  #    - "8004:8004"
-  #  environment:
-  #     - POSTGRES_DB=authDB
-  #     - POSTGRES_USER=userDB
-  #     - POSTGRES_PASSWORD=passwd123
-  # web:
-  #  build: .
-  #  restart: always
-  #  ports:
-  #    - "8000:8000"
-  #  environment:
-  #     - POSTGRES_DB=authDB
-  #     - POSTGRES_USER=userDB
-  #     - POSTGRES_PASSWORD=passwd123
+  stats:
+    build:
+      context: .
+      dockerfile: Dockerfile.stats_app
+    container_name: stats
+    restart: always
+    ports:
+     - "8004:80"
+
+

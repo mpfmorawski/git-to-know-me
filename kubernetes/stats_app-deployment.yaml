@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stats-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: stats-app
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        run: stats-app
+    spec:
+      containers:
+        - image: gtkm-stats_app:latest
+          name: stats-app
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+      restartPolicy: Always
+status: {}
