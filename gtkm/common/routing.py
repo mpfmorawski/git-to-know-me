@@ -32,18 +32,19 @@ MULTISERVICE_DEPLOYMENT = os.environ.get("MULTISERVICE_DEPLOYMENT") == "1"
 
 
 def gen_url(endpoint: str) -> str:
-    '''Generates full URL from selected API endpoint'''
-    port = None
-    if MULTISERVICE_DEPLOYMENT:
-        for pattern, p in REGEX_API_TO_PORT.items():
-            if re.fullmatch(pattern, endpoint) is not None:
-                port = p
-                break
-        if port is None:
-            port = SERVICE_PORTS[Service.ENDPOINT]
-            logger.warning(
-                f"Unknown endpoint: {endpoint}, reditecting to: http://127.0.0.1:{port}{endpoint}"
-            )
-    else:
-        port = 8000
-    return f"http://127.0.0.1:{port}{endpoint}"
+    # '''Generates full URL from selected API endpoint'''
+    # port = None
+    # if MULTISERVICE_DEPLOYMENT:
+    #     for pattern, p in REGEX_API_TO_PORT.items():
+    #         if re.fullmatch(pattern, endpoint) is not None:
+    #             port = p
+    #             break
+    #     if port is None:
+    #         port = SERVICE_PORTS[Service.ENDPOINT]
+    #         logger.warning(
+    #             f"Unknown endpoint: {endpoint}, reditecting to: http://127.0.0.1:{port}{endpoint}"
+    #         )
+    # else:
+    #     port = 8000
+    # return f"http://127.0.0.1:{port}{endpoint}"
+    return f"http://192.168.49.2{endpoint}"
