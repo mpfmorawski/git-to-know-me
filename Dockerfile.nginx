@@ -1,0 +1,5 @@
+FROM nginx
+
+COPY ./gtkm/static /usr/share/nginx/html
+
+COPY ./nginx/conf/nginx.conf /etc/nginx/conf/default.conf
