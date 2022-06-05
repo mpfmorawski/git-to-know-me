@@ -109,4 +109,48 @@ in your web browser.
   - `nginx -s reload`
   - `nginx -s quit`
 - Run `main_microservices.py`
-- 
+  
+
+### Microservice version with Kubernetes
+
+Docker builds:
+```bash
+docker build -t gtkm-auth_app -f Dockerfile.auth_app .
+docker build -t gtkm-stats_app -f Dockerfile.stats_app .
+docker build -t gtkm-github_app -f Dockerfile.github_app .
+```
+
+Start minikube:
+```bash
+minikube start
+```
+
+Load images
+```bash
+minikube image load gtkm-auth_app:latest
+minikube image load gtkm-stats_app:latest
+minikube image load gtkm-github_app:latest
+minikube image load gtkm-nginx:latest
+```
+
+Enable Ingress add on
+minikube addons enable ingress
+```bash
+minikube addons enable ingress
+```
+
+Apply services and deployments
+```bash
+cd kubernetes/
+kubectl apply -f auth_app-deployment.yaml,auth_app-service.yaml,github_app-service.yaml,github_app-deployment.yaml,ingress.yaml,stats_app-deployment.yaml,stats_app-service.yaml,nginx-service.yaml,nginx-deployment.yaml
+```
+
+Check ip to run app
+```bash
+minikube ip
+```
+
+Afterall
+```bash
+minikube delete
+```
