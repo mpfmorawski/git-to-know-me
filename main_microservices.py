@@ -35,11 +35,21 @@ def parse_arguments():
                         "--service",
                         choices=["auth_app", "stats_app", "github_fetch_app"],
                         help="Select single service to launch")
+    
+    parser.add_argument(
+        "--host",
+        type=str,
+        default="0.0.0.0",
+        help="Select host address (works only when single service is launched)."
+    )
+    
     parser.add_argument(
         "--port",
         type=int,
         default=8001,
-        help="Select used port (works only when single service is launched).")
+        help="Select used port (works only when single service is launched)."
+    )
+
     return parser.parse_args()
 
 
@@ -82,4 +92,4 @@ if __name__ == "__main__":
         run_all()
     else:
         name = "main_microservices:" + args.service
-        uvicorn.run(name, host="127.0.0.1", port=args.port, log_level="info")
+        uvicorn.run(name, host=args.host, port=args.port, env_file=".env", log_level="info")
