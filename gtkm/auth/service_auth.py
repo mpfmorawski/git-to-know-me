@@ -11,9 +11,12 @@ from .database.database_operations import get_user, get_user_by_github_login, cr
 from .sessions.session import backend, cookie, verifier
 from .sessions.session_data import SessionData
 
-Base.metadata.create_all(bind=engine)
+# Base.metadata.create_all(bind=engine)
 auth = APIRouter()
 
+@auth.get("/api/auth/test")
+async def get_test_response():
+    return "Test"
 
 # Endpoint for obtaining user data based on the user ID
 @auth.get("/auth/user/", response_model=User)

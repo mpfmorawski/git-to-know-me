@@ -10,45 +10,61 @@ services:
   #     - POSTGRES_DB=authDB
   #     - POSTGRES_USER=userDB
   #     - POSTGRES_PASSWORD=passwd123
+
+
   nginx:
-    image: nginx
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
     container_name: webserver
     restart: always
-    environment:
-      - NGINX_HOST=foobar.com
+    ports:
+     - "8000:80"
+
   auth:
-   image: nginx
-   restart: always
-   ports:
-     - "8001:8001"
+    build:
+      context: .
+      dockerfile: Dockerfile.github
+    container_name: auth
+    restart: always
+    ports:
+     - "8001:80"
+
+
+    # environment:
+    #   - NGINX_HOST=foobar.com
+  # auth:
+  #  image: nginx
+  #  restart: always
+  #  ports:
+  #    - "8001:8001"
   #  environment:
   #     - POSTGRES_DB=authDB
   #     - POSTGRES_USER=userDB
   #     - POSTGRES_PASSWORD=passwd123
-  github:
-   image: nginx
-   restart: always
-   ports:
-     - "8002:8002"
+  # github:
+  #  image: nginx
+  #  restart: always
+  #  ports:
+  #    - "8002:8002"
   #  environment:
   #     - POSTGRES_DB=authDB
   #     - POSTGRES_USER=userDB
   #     - POSTGRES_PASSWORD=passwd123
-  aggr:
-   image: nginx
-   restart: always
-   ports:
-     - "8004:8004"
+  # aggr:
+  #  image: nginx
+  #  restart: always
+  #  ports:
+  #    - "8004:8004"
   #  environment:
   #     - POSTGRES_DB=authDB
   #     - POSTGRES_USER=userDB
   #     - POSTGRES_PASSWORD=passwd123
-  web:
-   build: .
-   restart: always
-   ports:
-     - "8000:8000"
+  # web:
+  #  build: .
+  #  restart: always
+  #  ports:
+  #    - "8000:8000"
   #  environment:
   #     - POSTGRES_DB=authDB
   #     - POSTGRES_USER=userDB

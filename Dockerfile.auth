@@ -1,0 +1,11 @@
+FROM python:3.9-slim-buster
+
+WORKDIR /user/app
+
+COPY ./requirements.txt /user/app/requirements.txt
+
+RUN pip install --no-cache-dir --upgrade -r /user/app/requirements.txt
+
+COPY ./gtkm /user/app
+
+CMD ["uvicorn", "auth.service_auth:auth", "--host", "0.0.0.0", "--port", "80"]
