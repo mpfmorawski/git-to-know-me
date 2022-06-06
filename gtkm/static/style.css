@@ -168,6 +168,10 @@ text-align: justify;
 color: #FFFFFF;
 }
 
+.content .textbox p span {
+  font-weight: 800;
+}
+
 .content .textbox .github {
   display: inline-block;
   position: relative;
