@@ -255,9 +255,10 @@ color: #FFFFFF;
 
 .content .stats-grid{
   display: grid;
-  grid-template-columns: auto auto auto auto auto;
-  column-gap: 20px;
-  row-gap: 20px;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  /*grid-template-columns: max-content;*/
+  column-gap: 0px;
+  row-gap: 0px;
 
   position: relative;
   left: 0px;
@@ -267,11 +268,27 @@ color: #FFFFFF;
   padding: 20px;
 }
 
+.content .stats-grid h3{
+  position: relative;
+  left: 0px;
+  top: 0px;
+  margin: 10px;
+  
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 43px;
+
+  display: inline-flex;
+  white-space: nowrap;
+}
+
 .content .profile{
   height: 140px;
   grid-column: 1 / span 3;
 
-  min-width: 465px;
+  min-width: fit-content;
   display: flex;
 
   color: #FFFFFF;
@@ -281,8 +298,33 @@ color: #FFFFFF;
   height: 140px;
   grid-column: 4 / span 2;
 
-  min-width: 235px;
+  min-width: fit-content;
   display: flex;
+  justify-content: space-around;
+
+  color: #FFFFFF;
+}
+
+.content .chart{
+  height: 460px;
+  grid-column: 1 / span 2;
+
+  min-width: fit-content;
+  display: flex;
+  flex-direction: column;
+
+  color: #FFFFFF;
+}
+
+.content .repo-list{
+  height: 460px;
+  grid-column: 3 /span 3;
+
+  min-width: fit-content;
+  display: flex;
+  flex-direction: column;
+
+  color: #FFFFFF;
 }
 
 @media (max-width: 800px){
@@ -307,7 +349,8 @@ color: #FFFFFF;
 
 .content .profile .profile-data{
   position: relative;
-  left: 86px;
+  margin-left: 10px;
+  margin-right: 10px;
 
 }
 
@@ -315,6 +358,7 @@ color: #FFFFFF;
   position: relative;
   margin: 10px;
   text-align: left;
+  white-space: nowrap;
 
   font-family: 'Lato';
   font-style: normal;
@@ -332,6 +376,235 @@ color: #FFFFFF;
   font-weight: 300;
   font-size: 18px;
   line-height: 32px;
+}
+
+.content .general-stats .general-slot{
+  position: relative;
+  height: 118px;
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.content .general-stats .general-slot h4{
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 64px;
+  line-height: 77px;
+
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.content .general-stats .general-slot h5{
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 38px;
+
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.content .chart .chart-panel{
+  position: relative;
+  height: 350px;
+  margin: 10px;
+  
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.content .chart .chart-itself{
+  position: relative;
+  margin: 10px;
+  width: 300px;
+  height: 300px;
+}
+
+.content .chart .chart-legendbox{
+  position: relative;
+  margin-left: 30px;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+.content .chart .chart-legendbox ul{
+  list-style: none;
+  white-space: nowrap;
+}
+
+.content .chart .chart-legendbox .legend-value{
+  font-weight: 300;
+}
+
+.content .repo-list .repo-header{
+  display: flex;
+  justify-content: space-between;
+}
+
+.content .repo-list .repo-sorttype{
+  display: inline-block;
+  margin: 10px;
+  z-index: 0;
+  background: #393939;
+  border-radius: 10px;
+  
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+
+  white-space: nowrap;
+}
+
+.content .repo-list .caret{
+  margin-right: 5px;
+}
+
+.content .repo-list .repo-panel{
+  height: 375px;
+  margin: 10px;
+
+  overflow-y: scroll;
+  scrollbar-width: none; /*Firefox*/
+  -ms-overflow-style: none; /*Edge / IE*/
+}
+
+.content .repo-list .repo-panel::-webkit-scrollbar{ /*Chrome / Chromium-based*/
+  width: 0;
+  height: 0;
+}
+
+.content .repo-list .repo-box{
+  position: relative;
+  height: 180px;
+  background: #494949;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+
+  display: flex;
+}
+
+.content .repo-list .repo-picture{
+  margin: 10px;
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  position: relative;
+  z-index: 0;
+  background: #595959;
+  border-radius: 50px;
+}
+
+.content .repo-list .repo-data{
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  height: fit-content;
+}
+
+.content .repo-list .repo-username{
+  position: relative;
+  margin: 10px;
+
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 32px;
+}
+
+.content .repo-list .repo-url{
+  position: relative;
+  margin-left: 0px;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 43px;
+  text-decoration-line: underline;
+
+  color: #FFFFFF;
+}
+
+.content .repo-list .repo-stats{
+  margin-left: 0px;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.content .repo-list .stats-slot{
+  margin-right: 30px;
+
+  display: flex;
+  align-items: center;
+}
+
+.content .repo-list .stats-logo{
+  height: 36px;
+  margin-right: 10px;
+}
+
+.content .repo-list .stats-value{
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 43px;
+}
+
+.content .repo-list .sort-data{
+  position: relative;
+  top: 15px;
+  height: fit-content;
+  margin: 10px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.content .repo-list .sort-title{
+  margin: 10px;
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.content .repo-list .sort-value{
+  margin: 10px;
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 38px;
+  text-align: center;
 }
 
 header .profile-picture{
